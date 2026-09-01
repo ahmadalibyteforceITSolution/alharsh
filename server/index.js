@@ -3,7 +3,6 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcryptjs';
 
 dotenv.config();
 
@@ -15,9 +14,9 @@ app.use(cors());
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
-// --- Mongoose Connection ---
+// --- Non-blocking MongoDB Connection ---
 let isConnected = false;
-const connectDB = async () => {
+export const connectDB = async () => {
   if (isConnected || mongoose.connection.readyState === 1) {
     return true;
   }
@@ -27,19 +26,17 @@ const connectDB = async () => {
       serverSelectionTimeoutMS: 5000
     });
     isConnected = true;
-    console.log(`✅ MongoDB Atlas Connected: ${conn.connection.host}`);
+    console.log(`✅ [MongoDB Atlas] Connected: ${conn.connection.host}`);
     return true;
   } catch (err) {
-    console.error('MongoDB Connection Error:', err.message);
+    console.warn('⚠️ [MongoDB Warning] Connection deferred:', err.message);
     isConnected = false;
     return false;
   }
 };
 
-// Auto-connect middleware for serverless
-app.use(async (req, res, next) => {
-  await connectDB();
-  next();
+connectDB().then(connected => {
+  isConnected = connected;
 });
 
 // --- Mongoose Models ---
@@ -182,7 +179,7 @@ app.get(['/api/health', '/health', '/api'], (req, res) => {
   res.json({
     status: 'online',
     service: 'AL-HRSH E-Commerce API',
-    mongoDB: isConnected ? 'connected' : 'connecting',
+    mongoDB: isConnected || mongoose.connection.readyState === 1 ? 'connected' : 'connecting',
     timestamp: new Date()
   });
 });
@@ -541,11 +538,5 @@ app.get(['/api/admin/stats', '/admin/stats'], async (req, res) => {
     res.status(500).json({ success: false, message: err.message });
   }
 });
-
-if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
-  app.listen(PORT, () => {
-    console.log(`AL-HRSH Server running on port ${PORT}`);
-  });
-}
 
 export default app;

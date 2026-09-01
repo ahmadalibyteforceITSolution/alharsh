@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #026fc2;
+}
+
+/* Popular Pipes style diagonal accent */
+.popular-gradient {
+  background: linear-gradient(135deg, #072847 0%, #074c82 50%, #026fc2 100%);
+}
+
+.popular-blue-mesh {
+  background-color: #072847;
+  background-image: radial-gradient(at 0% 0%, rgba(12, 141, 228, 0.3) 0px, transparent 50%),
+                    radial-gradient(at 100% 100%, rgba(6, 182, 212, 0.2) 0px, transparent 50%);
+}
+
+.glass-header {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+}

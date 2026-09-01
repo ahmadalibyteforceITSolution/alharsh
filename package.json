@@ -1,5 +1,5 @@
 {
-  "name": "al-hrsh-ecommerce",
+  "name": "alharsh-store",
   "version": "1.0.0",
   "description": "AL-HRSH E-Commerce Website - Sanitary, Electrical & Hardware Products with Admin Dashboard",
   "main": "server/src/server.js",

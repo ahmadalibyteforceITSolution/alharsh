@@ -15,11 +15,16 @@ dotenv.config({ path: path.join(__dirname, '../.env') });
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Connect to MongoDB
+connectDB();
+
 // Middlewares
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
-app.use(morgan('dev'));
+if (process.env.NODE_ENV !== 'production') {
+  app.use(morgan('dev'));
+}
 
 // Static uploads folder
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
@@ -51,7 +56,7 @@ app.get('/api/health', (req, res) => {
     status: 'healthy',
     timestamp: new Date().toISOString(),
     service: 'AL-HRSH E-Commerce API',
-    database: 'MongoDB Atlas (Connected)'
+    database: 'MongoDB Atlas'
   });
 });
 
@@ -64,19 +69,15 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Start Server after connecting to MongoDB
-async function startServer() {
-  await connectDB();
+// Start listening if running directly (standalone Node.js server)
+if (require.main === module || !process.env.VERCEL) {
   app.listen(PORT, () => {
     console.log(`=======================================================`);
     console.log(`  🚀 AL-HRSH E-Commerce Backend Server Live on Port ${PORT}`);
     console.log(`  🔗 REST API URL: http://localhost:${PORT}/api`);
-    console.log(`  📁 Uploads URL: http://localhost:${PORT}/uploads`);
     console.log(`  🗄️ Database: MongoDB Atlas (Alharsh)`);
     console.log(`=======================================================`);
   });
 }
-
-startServer();
 
 module.exports = app;

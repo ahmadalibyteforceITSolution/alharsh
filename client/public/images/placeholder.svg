@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <linearGradient id="phGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#072847" />
+      <stop offset="100%" stop-color="#026fc2" />
+    </linearGradient>
+  </defs>
+  <rect width="400" height="400" rx="20" fill="url(#phGrad)" />
+  <g transform="translate(100, 100)" stroke="#ffffff" stroke-width="6" fill="none" opacity="0.9">
+    <!-- Pipe & Gear Icon -->
+    <circle cx="100" cy="100" r="70" stroke-width="12" />
+    <circle cx="100" cy="100" r="45" stroke="#38bdf8" stroke-width="8" stroke-dasharray="16,8" />
+    <path d="M100,10 L100,40 M100,160 L100,190 M10,100 L40,100 M160,100 L190,100" stroke-linecap="round" stroke-width="10" />
+  </g>
+  <text x="200" y="320" fill="#ffffff" font-family="sans-serif" font-size="20" font-weight="bold" text-anchor="middle">AL-HRSH</text>
+  <text x="200" y="345" fill="#7dd3fc" font-family="sans-serif" font-size="12" font-weight="600" text-anchor="middle">CERTIFIED PRODUCT</text>
+</svg>

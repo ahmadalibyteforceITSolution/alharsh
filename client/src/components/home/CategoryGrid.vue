@@ -24,13 +24,13 @@
         
         <!-- Sanitary Category Card -->
         <div class="group bg-white rounded-2xl border border-slate-200/90 overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-300 flex flex-col">
-          <div class="h-48 overflow-hidden relative bg-slate-100">
+          <div class="h-48 overflow-hidden relative bg-slate-900">
             <img 
-              src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80" 
+              src="/images/sanitary.svg" 
               alt="Sanitary Category" 
               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
             />
-            <div class="absolute inset-0 bg-gradient-to-t from-navy-950/80 via-navy-950/20 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-navy-950/90 via-navy-950/30 to-transparent"></div>
             <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between text-white">
               <div>
                 <span class="bg-brand-600 text-2xs font-extrabold px-2.5 py-0.5 rounded uppercase">Sanitary</span>
@@ -65,13 +65,13 @@
 
         <!-- Electrical Category Card -->
         <div class="group bg-white rounded-2xl border border-slate-200/90 overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-300 flex flex-col">
-          <div class="h-48 overflow-hidden relative bg-slate-100">
+          <div class="h-48 overflow-hidden relative bg-slate-900">
             <img 
-              src="https://images.unsplash.com/photo-1558441719-f70e944f336f?auto=format&fit=crop&w=800&q=80" 
+              src="/images/electrical.svg" 
               alt="Electrical Category" 
               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
             />
-            <div class="absolute inset-0 bg-gradient-to-t from-navy-950/80 via-navy-950/20 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-navy-950/90 via-navy-950/30 to-transparent"></div>
             <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between text-white">
               <div>
                 <span class="bg-amber-600 text-2xs font-extrabold px-2.5 py-0.5 rounded uppercase">Electrical</span>
@@ -106,13 +106,13 @@
 
         <!-- Hardware Category Card -->
         <div class="group bg-white rounded-2xl border border-slate-200/90 overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-300 flex flex-col">
-          <div class="h-48 overflow-hidden relative bg-slate-100">
+          <div class="h-48 overflow-hidden relative bg-slate-900">
             <img 
-              src="https://images.unsplash.com/photo-1581783342308-f792dbdd27c5?auto=format&fit=crop&w=800&q=80" 
+              src="/images/hardware.svg" 
               alt="Hardware Category" 
               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
             />
-            <div class="absolute inset-0 bg-gradient-to-t from-navy-950/80 via-navy-950/20 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-navy-950/90 via-navy-950/30 to-transparent"></div>
             <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between text-white">
               <div>
                 <span class="bg-slate-700 text-2xs font-extrabold px-2.5 py-0.5 rounded uppercase">Hardware</span>

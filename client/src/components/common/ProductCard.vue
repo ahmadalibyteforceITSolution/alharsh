@@ -27,8 +27,9 @@
     <!-- Product Image with Hover Zoom -->
     <router-link :to="`/product/${product.slug || product._id}`" class="block aspect-square w-full bg-slate-50 overflow-hidden relative group/img">
       <img 
-        :src="product.images?.[0] || '/logo.png'" 
+        :src="product.images?.[0] || '/images/placeholder.svg'" 
         :alt="product.name" 
+        @error="onImgError"
         class="w-full h-full object-cover object-center group-hover/img:scale-108 transition-transform duration-500" 
       />
       <!-- Quick View Hover Overlay Button -->
@@ -120,6 +121,10 @@ defineProps({
 
 const cartStore = useCartStore();
 const wishlistStore = useWishlistStore();
+
+const onImgError = (e) => {
+  e.target.src = '/images/placeholder.svg';
+};
 </script>
 
 <style scoped>

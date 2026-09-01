@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <defs>
+    <linearGradient id="hardBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="50%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#334155" />
+    </linearGradient>
+    <linearGradient id="toolSteel" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc" />
+      <stop offset="50%" stop-color="#94a3b8" />
+      <stop offset="100%" stop-color="#475569" />
+    </linearGradient>
+    <linearGradient id="brandCyan" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7" />
+      <stop offset="100%" stop-color="#0369a1" />
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#hardBg)" />
+
+  <!-- Industrial Mesh Lines -->
+  <g opacity="0.08" stroke="#ffffff" stroke-width="1.5">
+    <line x1="0" y1="0" x2="800" y2="500" />
+    <line x1="100" y1="0" x2="800" y2="400" />
+    <line x1="200" y1="0" x2="800" y2="300" />
+    <line x1="0" y1="100" x2="700" y2="500" />
+  </g>
+
+  <!-- Power Drill & Wrench Tools Graphic -->
+  <g transform="translate(180, 80)">
+    
+    <!-- Rotary Hammer Body Graphic -->
+    <g transform="translate(150, 20) rotate(-15)" filter="drop-shadow(0 15px 25px rgba(0,0,0,0.6))">
+      <!-- Motor Body -->
+      <rect x="0" y="40" width="160" height="80" rx="12" fill="url(#brandCyan)" />
+      <rect x="140" y="55" width="50" height="50" rx="6" fill="#1e293b" />
+      <!-- Chuck & Bit -->
+      <rect x="180" y="65" width="40" height="30" rx="4" fill="url(#toolSteel)" />
+      <polygon points="220,70 300,75 300,85 220,90" fill="url(#toolSteel)" />
+      <!-- Handle -->
+      <path d="M20,110 L40,210 C42,220 55,225 65,220 L80,210 L60,110 Z" fill="#0f172a" />
+      <rect x="65" y="130" width="15" height="25" rx="4" fill="#ef4444" />
+      <!-- Ventilation slots -->
+      <line x1="20" y1="60" x2="50" y2="60" stroke="#0f172a" stroke-width="4" stroke-linecap="round" />
+      <line x1="20" y1="75" x2="50" y2="75" stroke="#0f172a" stroke-width="4" stroke-linecap="round" />
+      <line x1="20" y1="90" x2="50" y2="90" stroke="#0f172a" stroke-width="4" stroke-linecap="round" />
+    </g>
+
+    <!-- Heavy Pipe Wrench Graphic -->
+    <g transform="translate(20, 140) rotate(35)" filter="drop-shadow(0 10px 15px rgba(0,0,0,0.5))">
+      <rect x="0" y="0" width="220" height="26" rx="6" fill="#dc2626" />
+      <!-- Cast Iron Jaw -->
+      <path d="M210,-10 L250,-10 L250,36 L210,36 Z" fill="url(#toolSteel)" />
+      <path d="M250,-30 L290,-30 L290,15 L265,15 L265,-5 L250,-5 Z" fill="url(#toolSteel)" />
+      <!-- Knurled Nut -->
+      <rect x="195" y="-5" width="20" height="36" rx="3" fill="#e2e8f0" />
+    </g>
+
+    <!-- Yale Brass Lock Graphic -->
+    <g transform="translate(380, 160)" filter="drop-shadow(0 8px 12px rgba(0,0,0,0.4))">
+      <path d="M25,50 L25,25 C25,10 40,0 55,0 C70,0 85,10 85,25 L85,50" fill="none" stroke="url(#toolSteel)" stroke-width="12" stroke-linecap="round" />
+      <rect x="10" y="45" width="90" height="70" rx="8" fill="#eab308" />
+      <circle cx="55" cy="75" r="7" fill="#1e293b" />
+      <polygon points="52,75 58,75 60,95 50,95" fill="#1e293b" />
+    </g>
+
+  </g>
+
+  <text x="50" y="440" fill="#ffffff" font-family="sans-serif" font-size="28" font-weight="900" letter-spacing="1">TOOLS, LOCKS &amp; FASTENERS</text>
+  <text x="50" y="470" fill="#94a3b8" font-family="sans-serif" font-size="14" font-weight="600">ROTARY HAMMERS &bull; ANGLE GRINDERS &bull; YALE LOCKS &bull; EXPANSION BOLTS</text>
+</svg>

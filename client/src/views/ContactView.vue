@@ -4,8 +4,8 @@
       
       <div class="text-center max-w-xl mx-auto mb-10 space-y-2">
         <div class="text-xs font-bold text-brand-700 uppercase tracking-widest">Get In Touch</div>
-        <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">Contact AL-HRSH Support & Sales</h1>
-        <p class="text-xs sm:text-sm text-slate-500">Reach our commercial supply and customer care teams directly.</p>
+        <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">Contact AL-HRSH Store</h1>
+        <p class="text-xs sm:text-sm text-slate-500">Visit our store, call our direct helpline, or send a project inquiry.</p>
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -14,9 +14,10 @@
         <div class="lg:col-span-5 space-y-6">
           
           <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-card space-y-6">
-            <h2 class="text-sm font-extrabold text-slate-900 uppercase tracking-wider border-b border-slate-100 pb-3">Direct Channels</h2>
+            <h2 class="text-sm font-extrabold text-slate-900 uppercase tracking-wider border-b border-slate-100 pb-3">Store & Direct Channels</h2>
 
             <div class="space-y-4 text-xs">
+              <!-- Helpline Phone -->
               <div class="flex items-start space-x-3">
                 <div class="w-10 h-10 rounded-xl bg-brand-100 text-brand-800 flex items-center justify-center shrink-0">
                   <Phone class="w-5 h-5" />
@@ -24,10 +25,11 @@
                 <div>
                   <div class="text-2xs text-slate-400 font-bold uppercase">Call Helpline</div>
                   <a href="tel:03029355294" class="text-sm font-extrabold text-brand-900 hover:underline">0302-9355294</a>
-                  <div class="text-2xs text-slate-500">Available Mon-Sat: 9:00 AM - 9:00 PM</div>
+                  <div class="text-2xs text-slate-500">Alt Phone: <a href="tel:03491175847" class="font-bold text-slate-700">0349-1175847</a></div>
                 </div>
               </div>
 
+              <!-- WhatsApp -->
               <div class="flex items-start space-x-3">
                 <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center shrink-0">
                   <MessageCircle class="w-5 h-5" />
@@ -39,35 +41,53 @@
                 </div>
               </div>
 
+              <!-- Facebook Social Page -->
               <div class="flex items-start space-x-3">
-                <div class="w-10 h-10 rounded-xl bg-cyan-100 text-cyan-800 flex items-center justify-center shrink-0">
-                  <Mail class="w-5 h-5" />
+                <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-800 flex items-center justify-center shrink-0">
+                  <Facebook class="w-5 h-5" />
                 </div>
                 <div>
-                  <div class="text-2xs text-slate-400 font-bold uppercase">Email Inquiries</div>
-                  <a href="mailto:support@alharsh.com" class="text-sm font-extrabold text-slate-800 hover:underline">support@alharsh.com</a>
-                  <div class="text-2xs text-slate-500">Official RFP and tender submissions</div>
+                  <div class="text-2xs text-slate-400 font-bold uppercase">Official Facebook Page</div>
+                  <a href="https://www.facebook.com/AlHRSHstore" target="_blank" class="text-sm font-extrabold text-blue-600 hover:underline">facebook.com/AlHRSHstore</a>
+                  <div class="text-2xs text-slate-500">Latest stock arrivals & customer updates</div>
                 </div>
               </div>
 
+              <!-- Physical Location -->
               <div class="flex items-start space-x-3">
                 <div class="w-10 h-10 rounded-xl bg-rose-100 text-rose-800 flex items-center justify-center shrink-0">
                   <MapPin class="w-5 h-5" />
                 </div>
                 <div>
-                  <div class="text-2xs text-slate-400 font-bold uppercase">Central Logistics Hub</div>
-                  <div class="text-xs font-bold text-slate-800">AL-HRSH Sanitary & Hardware Plaza</div>
-                  <div class="text-2xs text-slate-500">Main Commercial Hub, Pakistan</div>
+                  <div class="text-2xs text-slate-400 font-bold uppercase">Physical Store Location</div>
+                  <div class="text-xs font-bold text-slate-800">Al-HRSH Electrical Hardware and Sanitary Store</div>
+                  <a 
+                    href="https://www.google.com/maps/place/Al-HRSH+Electrical+Hardware+and+Saintary+Store/@31.413118,74.3738413,17z/data=!3m1!4b1!4m6!3m5!1s0x391907122e1d61af:0x841df44bfa54f6d9!8m2!3d31.413118!4d74.3738413!16s%2Fg%2F11r2rn7g4r" 
+                    target="_blank" 
+                    class="text-2xs text-brand-700 font-bold hover:underline inline-flex items-center space-x-1 mt-1"
+                  >
+                    <span>View on Google Maps &rarr;</span>
+                  </a>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Google Map Interactive Preview -->
-          <div class="bg-white rounded-3xl p-4 border border-slate-200 shadow-card overflow-hidden">
+          <!-- Embedded Google Map -->
+          <div class="bg-white rounded-3xl p-4 border border-slate-200 shadow-card overflow-hidden space-y-2">
+            <div class="flex items-center justify-between text-xs px-2 font-bold text-slate-700">
+              <span>Google Maps Location</span>
+              <a 
+                href="https://www.google.com/maps/place/Al-HRSH+Electrical+Hardware+and+Saintary+Store/@31.413118,74.3738413,17z" 
+                target="_blank" 
+                class="text-2xs text-brand-700 hover:underline"
+              >
+                Open Fullscreen
+              </a>
+            </div>
             <iframe 
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3401.7645161879717!2d74.34149!3d31.50367!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzHCsDMwJzEzLjIiTiA3NMKwMjAnMjkuNCJF!5e0!3m2!1sen!2s!4v1620000000000!5m2!1sen!2s" 
-              class="w-full h-48 rounded-2xl border-0" 
+              src="https://maps.google.com/maps?q=31.413118,74.3738413&hl=en&z=17&output=embed" 
+              class="w-full h-56 rounded-2xl border-0" 
               loading="lazy"
             ></iframe>
           </div>
@@ -76,7 +96,7 @@
 
         <!-- Right: Working Contact Form submitting to MongoDB -->
         <div class="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-10 border border-slate-200 shadow-card space-y-6">
-          <h2 class="text-base font-extrabold text-slate-900 border-b border-slate-100 pb-3">Send Us a Message</h2>
+          <h2 class="text-base font-extrabold text-slate-900 border-b border-slate-100 pb-3">Send Us a Direct Message</h2>
 
           <div v-if="successMsg" class="p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-2xl text-xs space-y-1">
             <div class="font-bold text-sm flex items-center space-x-1.5">
@@ -124,7 +144,7 @@
                   <option>Product Inquiry & Price List</option>
                   <option>Order Delivery Status</option>
                   <option>Contractor / Bulk Project Quotation</option>
-                  <option>Dealership / Retail Reselling</option>
+                  <option>Store Visit & Timings</option>
                   <option>Other Question</option>
                 </select>
               </div>
@@ -136,7 +156,7 @@
                 v-model="form.message" 
                 rows="4" 
                 required 
-                placeholder="Type your message here..." 
+                placeholder="Type your required pipe sizes, cables, tools, or questions..." 
                 class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-500 focus:outline-none"
               ></textarea>
             </div>
@@ -162,7 +182,7 @@
 <script setup>
 import { ref } from 'vue';
 import api from '../services/api';
-import { Phone, MessageCircle, Mail, MapPin, CheckCircle, Send } from 'lucide-vue-next';
+import { Phone, MessageCircle, Mail, MapPin, CheckCircle, Send, Facebook } from 'lucide-vue-next';
 
 const form = ref({
   name: '',

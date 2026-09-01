@@ -1,53 +1,67 @@
 <template>
   <div class="bg-navy-950 text-slate-300 text-2xs py-2 border-b border-navy-800 hidden md:block">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center whitespace-nowrap">
       
       <!-- Left: Direct Contact Details & Store Location -->
-      <div class="flex items-center space-x-6">
-        <div class="flex items-center space-x-1.5">
-          <Phone class="w-3.5 h-3.5 text-accent-cyan" />
-          <span>Helpline:</span>
-          <a href="tel:03029355294" class="text-white font-bold hover:text-accent-cyan transition-colors">0302-9355294</a>
+      <div class="flex items-center space-x-5 shrink-0">
+        <!-- Helpline -->
+        <div class="flex items-center space-x-1.5 whitespace-nowrap">
+          <Phone class="w-3.5 h-3.5 text-accent-cyan shrink-0" />
+          <span class="text-slate-400">Helpline:</span>
+          <a href="tel:03029355294" class="text-white font-bold hover:text-accent-cyan transition-colors whitespace-nowrap">
+            0302-9355294
+          </a>
         </div>
 
-        <div class="flex items-center space-x-1.5">
-          <MessageCircle class="w-3.5 h-3.5 text-emerald-400" />
-          <span>WhatsApp:</span>
-          <a href="https://wa.me/923029355294" target="_blank" class="text-emerald-400 font-bold hover:underline">+92 302 9355294</a>
+        <!-- WhatsApp -->
+        <div class="flex items-center space-x-1.5 whitespace-nowrap">
+          <MessageCircle class="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+          <span class="text-slate-400">WhatsApp:</span>
+          <a href="https://wa.me/923029355294" target="_blank" class="text-emerald-400 font-bold hover:underline whitespace-nowrap">
+            +92 302 9355294
+          </a>
         </div>
 
-        <div class="flex items-center space-x-1.5 text-slate-400">
-          <MapPin class="w-3.5 h-3.5 text-rose-400" />
-          <a href="https://www.google.com/maps/place/Al-HRSH+Electrical+Hardware+and+Saintary+Store/@31.413118,74.3738413,17z" target="_blank" class="hover:text-white transition-colors truncate max-w-xs">
-            Al-HRSH Electrical, Hardware &amp; Sanitary Store
+        <!-- Store Location Pin -->
+        <div class="flex items-center space-x-1.5 text-slate-300 whitespace-nowrap">
+          <MapPin class="w-3.5 h-3.5 text-rose-400 shrink-0" />
+          <a 
+            href="https://www.google.com/maps/place/Al-HRSH+Electrical+Hardware+and+Saintary+Store/@31.413118,74.3738413,17z" 
+            target="_blank" 
+            class="hover:text-white transition-colors whitespace-nowrap"
+          >
+            Al-HRSH Store Lahore
           </a>
         </div>
       </div>
 
-      <!-- Right: Social Media, Live Tracking & Staff Admin Login -->
-      <div class="flex items-center space-x-5">
+      <!-- Right: Facebook, Track Order, BOQ, Admin -->
+      <div class="flex items-center space-x-4 shrink-0">
         <!-- Facebook Social Link -->
         <a 
           href="https://www.facebook.com/AlHRSHstore" 
           target="_blank" 
           rel="noopener noreferrer" 
-          class="flex items-center space-x-1 text-slate-300 hover:text-white transition-colors bg-blue-600/30 hover:bg-blue-600 px-2.5 py-0.5 rounded-full border border-blue-500/30"
+          class="flex items-center space-x-1.5 text-slate-200 hover:text-white transition-colors bg-blue-600/30 hover:bg-blue-600 px-2.5 py-1 rounded-full border border-blue-500/30 whitespace-nowrap"
           title="Visit Official Facebook Page"
         >
           <Facebook class="w-3 h-3 text-blue-400" />
           <span class="font-bold">facebook.com/AlHRSHstore</span>
         </a>
 
-        <router-link to="/track" class="hover:text-white flex items-center space-x-1 transition-colors">
-          <Truck class="w-3.5 h-3.5 text-brand-400" />
+        <!-- Track Order -->
+        <router-link to="/track" class="hover:text-white flex items-center space-x-1 transition-colors whitespace-nowrap text-slate-300">
+          <Truck class="w-3.5 h-3.5 text-brand-400 shrink-0" />
           <span>Track Order</span>
         </router-link>
 
-        <router-link to="/quote" class="text-accent-cyan hover:underline font-bold">
-          Contractor BOQ Portal
+        <!-- Contractor BOQ -->
+        <router-link to="/quote" class="text-accent-cyan hover:underline font-bold whitespace-nowrap">
+          Contractor BOQ
         </router-link>
 
-        <router-link to="/admin" class="bg-brand-800 hover:bg-brand-700 text-white font-bold px-2.5 py-0.5 rounded transition-colors text-2xs">
+        <!-- Staff Admin Button -->
+        <router-link to="/admin" class="bg-brand-700 hover:bg-brand-600 text-white font-bold px-3 py-1 rounded-md transition-colors text-2xs whitespace-nowrap shadow-sm">
           Staff Admin &rarr;
         </router-link>
       </div>

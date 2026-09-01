@@ -61,28 +61,49 @@
           </div>
         </div>
 
-        <!-- Right: Showcase Image Card -->
+        <!-- Right: Showcase Visual Card -->
         <div class="lg:col-span-6 relative">
           <div class="relative mx-auto max-w-md lg:max-w-none">
-            <div class="absolute -inset-4 bg-gradient-to-r from-accent-cyan to-brand-400 rounded-3xl opacity-20 blur-xl"></div>
-            <div class="relative bg-navy-900 rounded-2xl border border-white/20 p-4 shadow-2xl overflow-hidden">
-              <img 
-                src="https://images.unsplash.com/photo-1590496793929-36417d3117de?auto=format&fit=crop&w=1000&q=80" 
-                alt="Piping Showcase" 
-                class="w-full h-80 object-cover rounded-xl" 
-              />
-              <div class="p-4 bg-navy-950/90 backdrop-blur-md rounded-xl mt-3 border border-white/10 flex items-center justify-between">
-                <div>
-                  <div class="text-xs font-bold text-white">Popular PPRC PN-20 High-Pressure Pipes</div>
-                  <div class="text-2xs text-slate-400">Available from 20mm (1/2") up to 110mm (4") with complete fittings</div>
+            <div class="absolute -inset-4 bg-gradient-to-r from-accent-cyan to-brand-400 rounded-3xl opacity-25 blur-xl"></div>
+            <div class="relative bg-navy-950 rounded-3xl border border-white/20 p-8 shadow-2xl space-y-6">
+              
+              <div class="flex items-center justify-between border-b border-white/10 pb-4">
+                <div class="flex items-center space-x-3">
+                  <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-extrabold text-sm border border-emerald-400/30">
+                    PN20
+                  </div>
+                  <div>
+                    <h3 class="font-extrabold text-white text-base">Popular PPRC PN-20 Pipes</h3>
+                    <p class="text-2xs text-accent-cyan">DIN 8077 / 8078 Certified &bull; 100% Virgin Polymer</p>
+                  </div>
                 </div>
+              </div>
+
+              <div class="space-y-3 text-xs text-slate-200">
+                <div class="p-3 bg-white/5 rounded-xl border border-white/10 flex justify-between">
+                  <span class="text-slate-400">Available Diameters:</span>
+                  <span class="font-bold text-white">20mm, 25mm, 32mm, 40mm up to 110mm</span>
+                </div>
+                <div class="p-3 bg-white/5 rounded-xl border border-white/10 flex justify-between">
+                  <span class="text-slate-400">Operating Temperature:</span>
+                  <span class="font-bold text-white">-20&deg;C up to +95&deg;C Continuous</span>
+                </div>
+                <div class="p-3 bg-white/5 rounded-xl border border-white/10 flex justify-between">
+                  <span class="text-slate-400">Jointing Mechanism:</span>
+                  <span class="font-bold text-white">Homogeneous Fusion Socket Welded</span>
+                </div>
+              </div>
+
+              <div class="pt-2 flex items-center justify-between">
+                <div class="text-2xs text-slate-300">Direct warehouse dispatch across Pakistan</div>
                 <router-link 
                   to="/shop?category=Sanitary&subcategory=Pipes+%26+Fittings+(PPRC+%26+PVC)" 
-                  class="bg-brand-600 text-white px-3 py-1.5 rounded-lg text-2xs font-bold shrink-0 hover:bg-brand-500 transition-colors"
+                  class="bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs px-5 py-2 rounded-xl transition-colors shadow"
                 >
-                  View Sizes
+                  View Pipe Sizes &rarr;
                 </router-link>
               </div>
+
             </div>
           </div>
         </div>

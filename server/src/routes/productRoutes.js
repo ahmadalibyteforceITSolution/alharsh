@@ -5,10 +5,10 @@ const Product = require('../models/Product');
 // Helper to generate slug
 const slugify = (text) => text.toString().toLowerCase().trim().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-');
 
-// GET /api/products (Live Catalog, filters, search, sort, pagination from MongoDB)
+// GET /api/products (Live Catalog from MongoDB)
 router.get('/', async (req, res) => {
   try {
-    const { category, subcategory, brand, search, sort, featured, bestSeller, isNewArrival, page = 1, limit = 50 } = req.query;
+    const { category, subcategory, brand, search, sort, featured, bestSeller, isNewArrival, page = 1, limit = 100 } = req.query;
     
     const query = { isActive: { $ne: false } };
     
@@ -63,7 +63,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// GET /api/products/:id (Single product by Mongo ID or Slug)
+// GET /api/products/:id (Single product by ID, Slug, or SKU)
 router.get('/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -80,7 +80,7 @@ router.get('/:id', async (req, res) => {
     }
 
     if (!product) {
-      return res.status(404).json({ success: false, message: 'Product not found' });
+      return res.status(404).json({ success: false, message: 'Product not found in database' });
     }
 
     const relatedProducts = await Product.find({
@@ -99,7 +99,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// POST /api/products (Admin manual product upload to MongoDB)
+// POST /api/products (Save product and all attributes into MongoDB)
 router.post('/', async (req, res) => {
   try {
     const {
@@ -123,29 +123,46 @@ router.post('/', async (req, res) => {
       tags
     } = req.body;
 
-    if (!name || !category || !price) {
+    if (!name || !category || price === undefined || price === null) {
       return res.status(400).json({ success: false, message: 'Product Name, Category, and Price are required' });
     }
 
-    const generatedSku = sku || `ALH-${category.substring(0, 3).toUpperCase()}-${Date.now().toString().slice(-4)}`;
+    const generatedSku = sku || `ALH-${(category || 'GEN').substring(0, 3).toUpperCase()}-${Date.now().toString().slice(-4)}`;
     const slug = slugify(name);
 
+    // Clean and filter specifications array
+    let cleanSpecs = [];
+    if (Array.isArray(specifications)) {
+      cleanSpecs = specifications.filter(s => s && s.label && s.label.trim() && s.value && s.value.trim());
+    }
+
+    // Clean features list
+    let cleanFeatures = [];
+    if (Array.isArray(features)) {
+      cleanFeatures = features.filter(f => typeof f === 'string' && f.trim().length > 0);
+    }
+
+    // Clean images
+    let cleanImages = Array.isArray(images) && images.length > 0 
+      ? images.filter(img => img && img.trim()) 
+      : ['/images/placeholder.svg'];
+
     const product = new Product({
-      name,
+      name: name.trim(),
       slug,
-      sku: generatedSku,
-      category,
-      subcategory: subcategory || 'General',
-      brand: brand || 'AL-HRSH Genuine',
+      sku: generatedSku.trim().toUpperCase(),
+      category: category.trim(),
+      subcategory: subcategory ? subcategory.trim() : 'General',
+      brand: brand ? brand.trim() : 'AL-HRSH Genuine',
       price: Number(price),
       salePrice: salePrice ? Number(salePrice) : null,
       stock: stock !== undefined ? Number(stock) : 25,
-      unit: unit || 'Piece',
-      images: Array.isArray(images) && images.length > 0 ? images : ['https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80'],
+      unit: unit ? unit.trim() : 'Piece',
+      images: cleanImages,
       description: description || '',
-      shortDescription: shortDescription || '',
-      specifications: Array.isArray(specifications) ? specifications : [],
-      features: Array.isArray(features) ? features : [],
+      shortDescription: shortDescription || (description ? description.substring(0, 160) : ''),
+      specifications: cleanSpecs,
+      features: cleanFeatures,
       featured: Boolean(featured),
       bestSeller: Boolean(bestSeller),
       isNewArrival: Boolean(isNewArrival),
@@ -155,32 +172,43 @@ router.post('/', async (req, res) => {
       isActive: true
     });
 
-    await product.save();
+    const saved = await product.save();
+    console.log(`✅ Product saved to MongoDB: "${saved.name}" (ID: ${saved._id})`);
 
     res.status(201).json({
       success: true,
-      message: 'Product created and saved into MongoDB successfully!',
-      product
+      message: 'Product and all specifications saved in MongoDB successfully!',
+      product: saved
     });
   } catch (error) {
+    console.error('Error saving product to MongoDB:', error);
     res.status(500).json({ success: false, message: error.message });
   }
 });
 
-// PUT /api/products/:id (Admin manual update in MongoDB)
+// PUT /api/products/:id (Update product in MongoDB)
 router.put('/:id', async (req, res) => {
   try {
     const { id } = req.params;
     if (req.body.name) {
       req.body.slug = slugify(req.body.name);
     }
+    if (req.body.price !== undefined) req.body.price = Number(req.body.price);
+    if (req.body.salePrice !== undefined) req.body.salePrice = req.body.salePrice ? Number(req.body.salePrice) : null;
+    if (req.body.stock !== undefined) req.body.stock = Number(req.body.stock);
+    if (Array.isArray(req.body.specifications)) {
+      req.body.specifications = req.body.specifications.filter(s => s && s.label && s.value);
+    }
+
     const product = await Product.findByIdAndUpdate(id, req.body, { new: true, runValidators: true });
     if (!product) {
-      return res.status(404).json({ success: false, message: 'Product not found in MongoDB' });
+      return res.status(404).json({ success: false, message: 'Product not found in database' });
     }
+    
+    console.log(`✅ Product updated in MongoDB: "${product.name}" (ID: ${product._id})`);
     res.json({
       success: true,
-      message: 'Product updated successfully in MongoDB',
+      message: 'Product updated in MongoDB successfully',
       product
     });
   } catch (error) {
@@ -188,42 +216,15 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// DELETE /api/products/:id (Admin delete from MongoDB)
+// DELETE /api/products/:id (Delete product from MongoDB)
 router.delete('/:id', async (req, res) => {
   try {
     const { id } = req.params;
     await Product.findByIdAndDelete(id);
+    console.log(`🧹 Product deleted from MongoDB (ID: ${id})`);
     res.json({
       success: true,
       message: 'Product deleted from MongoDB successfully'
-    });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
-});
-
-// POST /api/products/bulk (Admin bulk product upload to MongoDB)
-router.post('/bulk', async (req, res) => {
-  try {
-    const { products } = req.body;
-    if (!Array.isArray(products) || products.length === 0) {
-      return res.status(400).json({ success: false, message: 'Valid array of products is required' });
-    }
-
-    const preparedProducts = products.map((p) => ({
-      ...p,
-      slug: slugify(p.name || 'product'),
-      sku: p.sku || `ALH-${(p.category || 'GEN').substring(0, 3).toUpperCase()}-${Math.floor(1000 + Math.random() * 9000)}`,
-      rating: p.rating || 4.9,
-      reviewsCount: p.reviewsCount || 5,
-      isActive: true
-    }));
-
-    const inserted = await Product.insertMany(preparedProducts);
-    res.json({
-      success: true,
-      message: `Successfully uploaded ${inserted.length} products to MongoDB database!`,
-      count: inserted.length
     });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });

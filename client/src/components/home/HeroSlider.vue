@@ -8,14 +8,15 @@
       class="absolute inset-0 transition-opacity duration-1000 ease-in-out"
       :class="currentSlide === index ? 'opacity-100 z-10' : 'opacity-0 z-0'"
     >
-      <!-- Background Image with Overlay Gradient -->
       <img 
+        v-if="banner.image"
         :src="banner.image" 
         :alt="banner.title" 
+        @error="onImgError"
         class="w-full h-full object-cover object-center transform scale-105 transition-transform duration-10000 ease-out" 
       />
-      <div class="absolute inset-0 popular-blue-mesh opacity-90"></div>
-      <div class="absolute inset-0 bg-gradient-to-r from-navy-950 via-navy-950/80 to-transparent"></div>
+      <div class="absolute inset-0 popular-blue-mesh opacity-95"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-navy-950 via-navy-950/85 to-transparent"></div>
     </div>
 
     <!-- Content Container -->
@@ -86,12 +87,14 @@
 
     <!-- Navigation Arrows -->
     <button 
+      v-if="banners.length > 1"
       @click="prevSlide" 
       class="absolute left-4 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-navy-950/60 hover:bg-brand-800 text-white flex items-center justify-center backdrop-blur-sm transition-all"
     >
       <ChevronLeft class="w-6 h-6" />
     </button>
     <button 
+      v-if="banners.length > 1"
       @click="nextSlide" 
       class="absolute right-4 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-navy-950/60 hover:bg-brand-800 text-white flex items-center justify-center backdrop-blur-sm transition-all"
     >
@@ -99,7 +102,7 @@
     </button>
 
     <!-- Slide Indicators -->
-    <div class="absolute bottom-5 left-1/2 -translate-x-1/2 z-30 flex space-x-2">
+    <div v-if="banners.length > 1" class="absolute bottom-5 left-1/2 -translate-x-1/2 z-30 flex space-x-2">
       <button 
         v-for="(_, idx) in banners" 
         :key="idx" 
@@ -126,21 +129,35 @@ const props = defineProps({
 const currentSlide = ref(0);
 let timer = null;
 
+const onImgError = (e) => {
+  e.target.style.display = 'none';
+};
+
 const activeBanner = computed(() => {
   if (props.banners && props.banners.length > 0) {
     return props.banners[currentSlide.value] || props.banners[0];
   }
-  return null;
+  return {
+    title: 'AL-HRSH INDUSTRIAL SUPPLIES',
+    highlightText: 'Sanitary, Electrical & Hardware Products',
+    subtitle: 'Direct distributor rates, certified materials, and express nationwide freight across Pakistan.',
+    buttonText: 'Explore Catalog',
+    buttonLink: '/shop',
+    secondaryButtonText: 'Request Bulk Quote',
+    secondaryButtonLink: '/quote',
+    tag: 'CERTIFIED GENUINE SUPPLIES',
+    badgeText: 'ISO 9001:2015 TESTED'
+  };
 });
 
 const nextSlide = () => {
-  if (props.banners.length > 0) {
+  if (props.banners.length > 1) {
     currentSlide.value = (currentSlide.value + 1) % props.banners.length;
   }
 };
 
 const prevSlide = () => {
-  if (props.banners.length > 0) {
+  if (props.banners.length > 1) {
     currentSlide.value = (currentSlide.value - 1 + props.banners.length) % props.banners.length;
   }
 };

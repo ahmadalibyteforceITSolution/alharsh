@@ -19,28 +19,37 @@
         </router-link>
       </div>
 
-      <!-- Categories 3 Main Cards Grid -->
+      <!-- Categories 3 Main Cards Grid with Embedded High-Impact Visuals -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         
         <!-- Sanitary Category Card -->
         <div class="group bg-white rounded-2xl border border-slate-200/90 overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-300 flex flex-col">
-          <div class="h-48 overflow-hidden relative bg-slate-900">
-            <img 
-              src="/images/sanitary.svg" 
-              alt="Sanitary Category" 
-              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
-            />
-            <div class="absolute inset-0 bg-gradient-to-t from-navy-950/90 via-navy-950/30 to-transparent"></div>
-            <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between text-white">
-              <div>
-                <span class="bg-brand-600 text-2xs font-extrabold px-2.5 py-0.5 rounded uppercase">Sanitary</span>
-                <h3 class="text-lg font-extrabold text-white mt-1">Sanitary & Piping Systems</h3>
-              </div>
-              <div class="w-9 h-9 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white">
+          <div class="h-48 relative overflow-hidden bg-gradient-to-br from-navy-950 via-brand-950 to-brand-900 p-6 flex flex-col justify-between">
+            <!-- Background Vector Art -->
+            <div class="absolute -right-6 -bottom-6 w-40 h-40 opacity-20 pointer-events-none group-hover:scale-110 transition-transform duration-500">
+              <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="100" cy="100" r="80" stroke="#38bdf8" stroke-width="8" stroke-dasharray="12 8" />
+                <path d="M100 40 V160 M40 100 H160" stroke="#38bdf8" stroke-width="12" stroke-linecap="round" />
+              </svg>
+            </div>
+
+            <!-- Top Tag & Icon -->
+            <div class="flex items-center justify-between z-10">
+              <span class="bg-brand-600 text-white text-2xs font-extrabold px-2.5 py-1 rounded-md uppercase tracking-wider shadow">
+                Sanitary
+              </span>
+              <div class="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-accent-cyan shadow">
                 <Droplet class="w-5 h-5 text-accent-cyan" />
               </div>
             </div>
+
+            <!-- Bottom Title & Badges -->
+            <div class="z-10">
+              <h3 class="text-lg font-extrabold text-white leading-tight">Sanitary & Piping Systems</h3>
+              <p class="text-2xs text-brand-200 mt-0.5">Popular PPRC PN-20, Brass Taps & Commodes</p>
+            </div>
           </div>
+
           <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
             <div class="space-y-2">
               <p class="text-xs text-slate-600">PPRC pipes, brass bathroom taps, rainfall showers, one-piece commodes & water tanks.</p>
@@ -65,23 +74,31 @@
 
         <!-- Electrical Category Card -->
         <div class="group bg-white rounded-2xl border border-slate-200/90 overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-300 flex flex-col">
-          <div class="h-48 overflow-hidden relative bg-slate-900">
-            <img 
-              src="/images/electrical.svg" 
-              alt="Electrical Category" 
-              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
-            />
-            <div class="absolute inset-0 bg-gradient-to-t from-navy-950/90 via-navy-950/30 to-transparent"></div>
-            <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between text-white">
-              <div>
-                <span class="bg-amber-600 text-2xs font-extrabold px-2.5 py-0.5 rounded uppercase">Electrical</span>
-                <h3 class="text-lg font-extrabold text-white mt-1">Wires, Cables & Switchgear</h3>
-              </div>
-              <div class="w-9 h-9 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white">
+          <div class="h-48 relative overflow-hidden bg-gradient-to-br from-navy-950 via-slate-900 to-amber-950 p-6 flex flex-col justify-between">
+            <!-- Background Vector Art -->
+            <div class="absolute -right-6 -bottom-6 w-40 h-40 opacity-20 pointer-events-none group-hover:scale-110 transition-transform duration-500">
+              <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M100 20 L40 110 H90 L70 180 L160 90 H110 Z" fill="#fbbf24" />
+              </svg>
+            </div>
+
+            <!-- Top Tag & Icon -->
+            <div class="flex items-center justify-between z-10">
+              <span class="bg-amber-600 text-white text-2xs font-extrabold px-2.5 py-1 rounded-md uppercase tracking-wider shadow">
+                Electrical
+              </span>
+              <div class="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-amber-400 shadow">
                 <Zap class="w-5 h-5 text-amber-400" />
               </div>
             </div>
+
+            <!-- Bottom Title & Badges -->
+            <div class="z-10">
+              <h3 class="text-lg font-extrabold text-white leading-tight">Wires, Cables & Switchgear</h3>
+              <p class="text-2xs text-amber-200 mt-0.5">Fast Cables 100% Copper, Schneider MCBs</p>
+            </div>
           </div>
+
           <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
             <div class="space-y-2">
               <p class="text-xs text-slate-600">Fast Cables 100% pure copper, Schneider circuit breakers, luxury glass switches & BLDC fans.</p>
@@ -106,23 +123,32 @@
 
         <!-- Hardware Category Card -->
         <div class="group bg-white rounded-2xl border border-slate-200/90 overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-300 flex flex-col">
-          <div class="h-48 overflow-hidden relative bg-slate-900">
-            <img 
-              src="/images/hardware.svg" 
-              alt="Hardware Category" 
-              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
-            />
-            <div class="absolute inset-0 bg-gradient-to-t from-navy-950/90 via-navy-950/30 to-transparent"></div>
-            <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between text-white">
-              <div>
-                <span class="bg-slate-700 text-2xs font-extrabold px-2.5 py-0.5 rounded uppercase">Hardware</span>
-                <h3 class="text-lg font-extrabold text-white mt-1">Tools, Locks & Fasteners</h3>
-              </div>
-              <div class="w-9 h-9 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white">
+          <div class="h-48 relative overflow-hidden bg-gradient-to-br from-navy-950 via-slate-900 to-slate-800 p-6 flex flex-col justify-between">
+            <!-- Background Vector Art -->
+            <div class="absolute -right-6 -bottom-6 w-40 h-40 opacity-20 pointer-events-none group-hover:scale-110 transition-transform duration-500">
+              <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="50" y="50" width="100" height="100" rx="16" stroke="#94a3b8" stroke-width="10" />
+                <circle cx="100" cy="100" r="25" fill="#94a3b8" />
+              </svg>
+            </div>
+
+            <!-- Top Tag & Icon -->
+            <div class="flex items-center justify-between z-10">
+              <span class="bg-slate-700 text-white text-2xs font-extrabold px-2.5 py-1 rounded-md uppercase tracking-wider shadow">
+                Hardware
+              </span>
+              <div class="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-slate-300 shadow">
                 <Wrench class="w-5 h-5 text-accent-cyan" />
               </div>
             </div>
+
+            <!-- Bottom Title & Badges -->
+            <div class="z-10">
+              <h3 class="text-lg font-extrabold text-white leading-tight">Tools, Locks & Fasteners</h3>
+              <p class="text-2xs text-slate-300 mt-0.5">Rotary Hammers, Yale Locks & Anchor Bolts</p>
+            </div>
           </div>
+
           <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
             <div class="space-y-2">
               <p class="text-xs text-slate-600">Heavy-duty power drills, angle grinders, pipe wrenches, high-security door locks & anchor bolts.</p>

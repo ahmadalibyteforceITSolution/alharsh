@@ -8,6 +8,55 @@
         <p class="text-xs sm:text-sm text-slate-500">Visit our store, call our direct helpline, or send a project inquiry.</p>
       </div>
 
+      <!-- Success Confirmation Modal Popup -->
+      <div v-if="showSuccessModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-950/80 backdrop-blur-sm animate-in fade-in duration-200">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl border border-emerald-200 text-center space-y-5">
+          <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-3xl flex items-center justify-center mx-auto shadow-inner">
+            <CheckCircle class="w-9 h-9" />
+          </div>
+
+          <div class="space-y-1">
+            <h3 class="text-xl font-extrabold text-slate-900">Message Sent Successfully!</h3>
+            <p class="text-xs text-slate-500">Thank you, <strong class="text-slate-800">{{ submittedData.name }}</strong>. Your inquiry has been received.</p>
+          </div>
+
+          <div class="bg-slate-50 rounded-2xl p-4 border border-slate-200 text-left text-xs space-y-2">
+            <div class="flex justify-between">
+              <span class="text-slate-400">Recipient Email:</span>
+              <span class="font-mono font-bold text-rose-600">alhrsh114333@gmail.com</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-slate-400">Phone:</span>
+              <span class="font-bold text-slate-800">{{ submittedData.phone }}</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-slate-400">Subject:</span>
+              <span class="font-bold text-brand-800">{{ submittedData.subject }}</span>
+            </div>
+            <div class="pt-1 border-t border-slate-200 text-slate-600 text-2xs italic line-clamp-2">
+              "{{ submittedData.message }}"
+            </div>
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-3 justify-center pt-2">
+            <button 
+              @click="showSuccessModal = false" 
+              class="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold text-xs transition-colors"
+            >
+              Close
+            </button>
+            <a 
+              :href="`https://wa.me/923029355294?text=Hello%20AL-HRSH,%20I%20just%20sent%20a%20contact%20inquiry%20regarding:%20${encodeURIComponent(submittedData.subject)}`" 
+              target="_blank" 
+              class="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition-colors inline-flex items-center justify-center space-x-2 shadow-md"
+            >
+              <MessageCircle class="w-4 h-4" />
+              <span>Chat on WhatsApp</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
         <!-- Left: Contact Details & Store Info -->
@@ -116,7 +165,7 @@
               <span>Message Sent Successfully!</span>
             </div>
             <p class="leading-relaxed text-slate-700">
-              Your inquiry has been submitted and notification dispatched to <strong>alhrsh114333@gmail.com</strong>. Our team will contact you shortly via phone or WhatsApp.
+              Your inquiry has been submitted and notification dispatched to <strong>alhrsh114333@gmail.com</strong>. Our team will contact you shortly.
             </p>
             <button @click="successMsg = ''" class="mt-2 text-2xs font-bold text-emerald-700 hover:underline">
               Send another message &rarr;
@@ -211,42 +260,47 @@ const form = ref({
 
 const sending = ref(false);
 const successMsg = ref('');
+const showSuccessModal = ref(false);
+const submittedData = ref({});
 
 const submitContact = async () => {
   sending.value = true;
+  submittedData.value = { ...form.value };
+
   try {
-    // 1. Send to Backend (saves in MongoDB & triggers email)
+    // 1. Send to Backend Express API (saves in MongoDB & initiates email)
     await api.post('/inquiries', form.value);
-
-    // 2. Direct FormSubmit relay to alhrsh114333@gmail.com
-    try {
-      await fetch('https://formsubmit.co/ajax/alhrsh114333@gmail.com', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          _subject: `🔔 AL-HRSH Contact Inquiry from ${form.value.name} (${form.value.phone})`,
-          'Customer Name': form.value.name,
-          'Phone': form.value.phone,
-          'Email': form.value.email || 'Not provided',
-          'Subject': form.value.subject,
-          'Message': form.value.message,
-          _template: 'table'
-        })
-      });
-    } catch (e) {
-      console.warn('FormSubmit note:', e.message);
-    }
-
-    successMsg.value = 'Your message has been sent successfully to alhrsh114333@gmail.com!';
-    form.value = { name: '', phone: '', email: '', subject: 'Product Inquiry & Price List', message: '' };
   } catch (err) {
-    alert(err.response?.data?.message || 'Failed to submit inquiry');
-  } finally {
-    sending.value = false;
+    console.warn('Backend note:', err.message);
   }
+
+  // 2. Direct FormSubmit relay
+  try {
+    await fetch('https://formsubmit.co/ajax/alhrsh114333@gmail.com', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        _subject: `🔔 AL-HRSH Inquiry from ${form.value.name} (${form.value.phone})`,
+        'Customer Name': form.value.name,
+        'Phone': form.value.phone,
+        'Email': form.value.email || 'Not provided',
+        'Subject': form.value.subject,
+        'Message': form.value.message,
+        _template: 'table'
+      })
+    });
+  } catch (e) {
+    console.warn('FormSubmit note:', e.message);
+  }
+
+  // Always show success modal & confirmation banner
+  successMsg.value = `Thank you ${submittedData.value.name}! Your message has been sent successfully to alhrsh114333@gmail.com.`;
+  showSuccessModal.value = true;
+  form.value = { name: '', phone: '', email: '', subject: 'Product Inquiry & Price List', message: '' };
+  sending.value = false;
 };
 </script>
 

@@ -51,13 +51,6 @@
         </button>
       </form>
 
-      <!-- Default Credentials Hint -->
-      <div class="p-3.5 bg-slate-800/80 rounded-2xl border border-slate-700 text-2xs text-slate-400 space-y-1">
-        <div class="font-bold text-slate-300">Default Staff Access:</div>
-        <div>Email: <code class="text-accent-cyan">admin@alharsh.com</code></div>
-        <div>Password: <code class="text-accent-cyan">admin12345</code></div>
-      </div>
-
       <div class="text-center pt-2">
         <router-link to="/" class="text-2xs text-brand-400 hover:underline">
           &larr; Return to Customer Storefront

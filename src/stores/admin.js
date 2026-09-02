@@ -219,18 +219,25 @@ export const useAdminStore = defineStore('admin', {
     },
 
     async uploadImage(file) {
-      try {
-        const formData = new FormData();
-        formData.append('image', file);
-        const res = await api.post('/upload/single', formData, {
-          headers: { 'Content-Type': 'multipart/form-data' }
-        });
-        if (res.data.success) {
-          return { success: true, url: res.data.url };
-        }
-      } catch (err) {
-        return { success: false, message: err.response?.data?.message || 'Image upload failed' };
+      const MAX_BYTES = 20 * 1024 * 1024; // 20 MB
+      if (file.size > MAX_BYTES) {
+        const sizeMB = (file.size / (1024 * 1024)).toFixed(1);
+        return { 
+          success: false, 
+          message: `Image is ${sizeMB} MB! Maximum allowed image upload size is 20 MB. Please select an image under 20 MB.` 
+        };
       }
+
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          resolve({ success: true, url: e.target.result });
+        };
+        reader.onerror = () => {
+          resolve({ success: false, message: 'Failed to read image file from device.' });
+        };
+        reader.readAsDataURL(file);
+      });
     }
   }
 });

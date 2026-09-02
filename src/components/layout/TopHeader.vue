@@ -35,7 +35,7 @@
         </div>
       </div>
 
-      <!-- Right: Facebook, Track Order, BOQ, Admin -->
+      <!-- Right: Facebook, Track Order, Contractor BOQ -->
       <div class="flex items-center space-x-4 shrink-0">
         <!-- Facebook Social Link -->
         <a 
@@ -58,11 +58,6 @@
         <!-- Contractor BOQ -->
         <router-link to="/quote" class="text-accent-cyan hover:underline font-bold whitespace-nowrap">
           Contractor BOQ
-        </router-link>
-
-        <!-- Staff Admin Button -->
-        <router-link to="/admin" class="bg-brand-700 hover:bg-brand-600 text-white font-bold px-3 py-1 rounded-md transition-colors text-2xs whitespace-nowrap shadow-sm">
-          Staff Admin &rarr;
         </router-link>
       </div>
 

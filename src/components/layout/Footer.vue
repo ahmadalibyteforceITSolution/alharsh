@@ -49,7 +49,7 @@
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 text-xs">
         
         <!-- Company Info & Social Media -->
-        <div class="lg:col-span-2 space-y-4">
+        <div class="lg:col-span-2 space-y-5">
           <div class="flex items-center space-x-3">
             <div class="bg-white p-2 rounded-xl shadow-md">
               <img src="/logo.png" alt="AL-HRSH Official Logo" class="h-10 w-auto object-contain" />
@@ -64,30 +64,58 @@
             Premier supplier of genuine building, plumbing, electrical, and hardware materials. Authorized channel distributor for Popular Pipes Group, Fast Cables, Schneider Electric, and Sonex Sanitary.
           </p>
 
-          <!-- Social Media Buttons -->
-          <div class="space-y-2 pt-1">
-            <div class="text-2xs font-bold text-slate-400 uppercase">Connect With Us:</div>
-            <div class="flex items-center space-x-3">
+          <!-- Social Media & Official Channels -->
+          <div class="space-y-2.5 pt-1">
+            <div class="text-2xs font-bold text-slate-300 uppercase tracking-wider flex items-center space-x-1.5">
+              <Share2 class="w-3.5 h-3.5 text-accent-cyan" />
+              <span>Official Social Media &amp; Channels:</span>
+            </div>
+            
+            <div class="flex items-center space-x-2.5 flex-wrap gap-y-2">
+              <!-- Facebook -->
               <a 
                 href="https://www.facebook.com/AlHRSHstore" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                class="flex items-center space-x-2 bg-blue-600 hover:bg-blue-500 text-white px-3.5 py-2 rounded-xl text-xs font-bold shadow transition-all"
+                class="flex items-center space-x-1.5 bg-[#1877F2] hover:bg-[#166fe5] text-white px-3 py-2 rounded-xl text-xs font-bold shadow transition-all hover:scale-105"
                 title="Follow us on Facebook"
               >
-                <Facebook class="w-4 h-4" />
-                <span>Facebook Page</span>
+                <Facebook class="w-4 h-4 fill-current" />
+                <span>Facebook</span>
               </a>
 
+              <!-- WhatsApp -->
               <a 
                 href="https://wa.me/923029355294" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                class="flex items-center space-x-2 bg-emerald-600 hover:bg-emerald-500 text-white px-3.5 py-2 rounded-xl text-xs font-bold shadow transition-all"
-                title="Chat on WhatsApp"
+                class="flex items-center space-x-1.5 bg-[#25D366] hover:bg-[#20bd5a] text-white px-3 py-2 rounded-xl text-xs font-bold shadow transition-all hover:scale-105"
+                title="Chat on WhatsApp (+92 302 9355294)"
               >
-                <MessageCircle class="w-4 h-4" />
+                <MessageCircle class="w-4 h-4 fill-current" />
                 <span>WhatsApp</span>
+              </a>
+
+              <!-- Email -->
+              <a 
+                href="mailto:alhrsh114333@gmail.com" 
+                class="flex items-center space-x-1.5 bg-rose-600 hover:bg-rose-500 text-white px-3 py-2 rounded-xl text-xs font-bold shadow transition-all hover:scale-105"
+                title="Send Email to alhrsh114333@gmail.com"
+              >
+                <Mail class="w-4 h-4" />
+                <span>Email Us</span>
+              </a>
+
+              <!-- Google Maps -->
+              <a 
+                href="https://www.google.com/maps/place/Al-HRSH+Electrical+Hardware+and+Saintary+Store/@31.413118,74.3738413,17z" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="flex items-center space-x-1.5 bg-slate-800 hover:bg-slate-700 text-accent-cyan px-3 py-2 rounded-xl text-xs font-bold border border-slate-700 shadow transition-all hover:scale-105"
+                title="View Location on Google Maps"
+              >
+                <MapPin class="w-4 h-4 text-rose-400" />
+                <span>Maps Location</span>
               </a>
             </div>
           </div>
@@ -138,8 +166,9 @@
               <span>Open in Google Maps &rarr;</span>
             </a>
             <div class="pt-2 text-2xs space-y-1 text-slate-300">
-              <div>Helpline: <a href="tel:03029355294" class="font-bold text-white">0302-9355294</a></div>
-              <div>Mobile: <a href="tel:03491175847" class="font-bold text-white">0349-1175847</a></div>
+              <div>Helpline: <a href="tel:03029355294" class="font-bold text-white hover:text-accent-cyan">0302-9355294</a></div>
+              <div>Mobile: <a href="tel:03491175847" class="font-bold text-white hover:text-accent-cyan">0349-1175847</a></div>
+              <div>Email: <a href="mailto:alhrsh114333@gmail.com" class="font-bold text-accent-cyan hover:underline">alhrsh114333@gmail.com</a></div>
             </div>
           </div>
         </div>
@@ -164,7 +193,7 @@
 </template>
 
 <script setup>
-import { ShieldCheck, Truck, Headphones, FileSpreadsheet, MapPin, Facebook, MessageCircle, Navigation } from 'lucide-vue-next';
+import { ShieldCheck, Truck, Headphones, FileSpreadsheet, MapPin, Facebook, MessageCircle, Navigation, Mail, Share2 } from 'lucide-vue-next';
 </script>
 
 <style scoped>

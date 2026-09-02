@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
+import { sendInquiryEmail, sendOrderInvoiceEmail, sendQuoteEmail } from './services/emailService.js';
 
 dotenv.config();
 
@@ -181,6 +182,7 @@ app.get(['/api/health', '/health', '/api'], (req, res) => {
     status: 'online',
     service: 'AL-HRSH E-Commerce API',
     mongoDB: isConnected || mongoose.connection.readyState === 1 ? 'connected' : 'connecting',
+    emailService: 'Configured for alhrsh114333@gmail.com',
     timestamp: new Date()
   });
 });
@@ -324,6 +326,10 @@ app.post(['/api/orders', '/orders'], async (req, res) => {
     });
 
     const saved = await order.save();
+
+    // Trigger full sales invoice email to alhrsh114333@gmail.com asynchronously
+    sendOrderInvoiceEmail(saved).catch(err => console.warn('Order email trigger note:', err.message));
+
     res.status(201).json({ success: true, message: 'Order placed successfully', orderNumber: saved.orderNumber, order: saved });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
@@ -388,8 +394,12 @@ app.post(['/api/quotes', '/quotes'], async (req, res) => {
     await connectDB();
     const quoteNumber = `QUO-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
     const quote = new Quote({ ...req.body, quoteNumber });
-    await quote.save();
-    res.status(201).json({ success: true, quoteNumber: quote.quoteNumber, quote });
+    const saved = await quote.save();
+
+    // Trigger contractor BOQ notification email to alhrsh114333@gmail.com asynchronously
+    sendQuoteEmail(saved).catch(err => console.warn('Quote email trigger note:', err.message));
+
+    res.status(201).json({ success: true, quoteNumber: saved.quoteNumber, quote: saved });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
@@ -496,12 +506,16 @@ app.delete(['/api/coupons/:id', '/coupons/:id'], async (req, res) => {
   }
 });
 
-// Inquiries: POST & GET
+// Inquiries: POST & GET (Routes all inquiries to alhrsh114333@gmail.com)
 app.post(['/api/inquiries', '/inquiries'], async (req, res) => {
   try {
     await connectDB();
     const inq = new Inquiry(req.body);
-    await inq.save();
+    const saved = await inq.save();
+
+    // Trigger inquiry notification email to alhrsh114333@gmail.com asynchronously
+    sendInquiryEmail(saved).catch(err => console.warn('Inquiry email trigger note:', err.message));
+
     res.status(201).json({ success: true, message: 'Your message has been sent successfully!' });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });

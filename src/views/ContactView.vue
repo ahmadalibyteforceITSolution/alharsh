@@ -53,9 +53,21 @@
                 </div>
               </div>
 
-              <!-- Physical Location -->
+              <!-- Email Link -->
               <div class="flex items-start space-x-3">
                 <div class="w-10 h-10 rounded-xl bg-rose-100 text-rose-800 flex items-center justify-center shrink-0">
+                  <Mail class="w-5 h-5" />
+                </div>
+                <div>
+                  <div class="text-2xs text-slate-400 font-bold uppercase">Official Email</div>
+                  <a href="mailto:alhrsh114333@gmail.com" class="text-sm font-extrabold text-rose-700 hover:underline">alhrsh114333@gmail.com</a>
+                  <div class="text-2xs text-slate-500">Direct inquiries & quotation requests</div>
+                </div>
+              </div>
+
+              <!-- Physical Location -->
+              <div class="flex items-start space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-slate-100 text-slate-800 flex items-center justify-center shrink-0">
                   <MapPin class="w-5 h-5" />
                 </div>
                 <div>
@@ -94,16 +106,21 @@
 
         </div>
 
-        <!-- Right: Working Contact Form submitting to MongoDB -->
+        <!-- Right: Working Contact Form -->
         <div class="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-10 border border-slate-200 shadow-card space-y-6">
           <h2 class="text-base font-extrabold text-slate-900 border-b border-slate-100 pb-3">Send Us a Direct Message</h2>
 
-          <div v-if="successMsg" class="p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-2xl text-xs space-y-1">
-            <div class="font-bold text-sm flex items-center space-x-1.5">
-              <CheckCircle class="w-4 h-4 text-emerald-600" />
+          <div v-if="successMsg" class="p-5 bg-emerald-50 border border-emerald-300 text-emerald-900 rounded-2xl text-xs space-y-2 shadow-sm">
+            <div class="font-extrabold text-sm flex items-center space-x-2 text-emerald-800">
+              <CheckCircle class="w-5 h-5 text-emerald-600" />
               <span>Message Sent Successfully!</span>
             </div>
-            <p>{{ successMsg }}</p>
+            <p class="leading-relaxed text-slate-700">
+              Your inquiry has been submitted and notification dispatched to <strong>alhrsh114333@gmail.com</strong>. Our team will contact you shortly via phone or WhatsApp.
+            </p>
+            <button @click="successMsg = ''" class="mt-2 text-2xs font-bold text-emerald-700 hover:underline">
+              Send another message &rarr;
+            </button>
           </div>
 
           <form v-else @submit.prevent="submitContact" class="space-y-4">
@@ -198,11 +215,33 @@ const successMsg = ref('');
 const submitContact = async () => {
   sending.value = true;
   try {
-    const res = await api.post('/inquiries', form.value);
-    if (res.data.success) {
-      successMsg.value = res.data.message;
-      form.value = { name: '', phone: '', email: '', subject: 'Product Inquiry & Price List', message: '' };
+    // 1. Send to Backend (saves in MongoDB & triggers email)
+    await api.post('/inquiries', form.value);
+
+    // 2. Direct FormSubmit relay to alhrsh114333@gmail.com
+    try {
+      await fetch('https://formsubmit.co/ajax/alhrsh114333@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          _subject: `🔔 AL-HRSH Contact Inquiry from ${form.value.name} (${form.value.phone})`,
+          'Customer Name': form.value.name,
+          'Phone': form.value.phone,
+          'Email': form.value.email || 'Not provided',
+          'Subject': form.value.subject,
+          'Message': form.value.message,
+          _template: 'table'
+        })
+      });
+    } catch (e) {
+      console.warn('FormSubmit note:', e.message);
     }
+
+    successMsg.value = 'Your message has been sent successfully to alhrsh114333@gmail.com!';
+    form.value = { name: '', phone: '', email: '', subject: 'Product Inquiry & Price List', message: '' };
   } catch (err) {
     alert(err.response?.data?.message || 'Failed to submit inquiry');
   } finally {

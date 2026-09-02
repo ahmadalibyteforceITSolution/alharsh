@@ -46,6 +46,99 @@
         </div>
       </div>
 
+      <!-- Strategic Real Estate & Architectural Partnership Section -->
+      <div class="bg-gradient-to-br from-navy-950 via-slate-900 to-brand-950 rounded-3xl p-8 sm:p-12 text-white border border-navy-800 shadow-2xl relative overflow-hidden space-y-8">
+        <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 border-b border-navy-800 pb-6">
+          <div class="space-y-2">
+            <div class="inline-flex items-center space-x-2 bg-brand-500/20 text-accent-cyan border border-brand-400/30 px-3 py-1 rounded-full text-2xs uppercase tracking-wider font-extrabold">
+              <Sparkles class="w-3.5 h-3.5 text-accent-cyan" />
+              <span>Strategic Collaboration Partner</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+              Real Estate Agency &amp; Architectural Partner: <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent-cyan to-teal-300">H&amp;Q Design Services</span>
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed">
+              To deliver a comprehensive construction experience, AL-HRSH Store collaborates with <a href="https://h-q-design-services.vercel.app/" target="_blank" rel="noopener noreferrer" class="text-accent-cyan font-bold hover:underline">H&amp;Q Design Services (HANDQ)</a> — Lahore's leading architecture studio and real estate design consultancy.
+            </p>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-3">
+            <a 
+              href="https://h-q-design-services.vercel.app/" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs px-6 py-3 rounded-xl shadow-lg transition-all hover:scale-105 inline-flex items-center space-x-2"
+            >
+              <span>Visit H&amp;Q Design Services</span>
+              <ExternalLink class="w-4 h-4" />
+            </a>
+            <a 
+              href="tel:+923416887454" 
+              class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs px-5 py-3 rounded-xl transition-all inline-flex items-center space-x-2"
+            >
+              <Phone class="w-4 h-4 text-accent-cyan" />
+              <span>0341-6887454</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Partnership Synergy Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="bg-navy-900/60 border border-navy-700/60 p-6 rounded-2xl space-y-2">
+            <div class="text-accent-cyan font-extrabold text-sm flex items-center space-x-2">
+              <Compass class="w-4 h-4" />
+              <span>3D Elevation &amp; Floor Plans</span>
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Photorealistic 3D front elevations, luxury interior renders, and floor layouts for 5 Marla, 10 Marla, and 1 Kanal modern &amp; Spanish villas in Lahore and DHA housing societies.
+            </p>
+          </div>
+
+          <div class="bg-navy-900/60 border border-navy-700/60 p-6 rounded-2xl space-y-2">
+            <div class="text-accent-cyan font-extrabold text-sm flex items-center space-x-2">
+              <Building class="w-4 h-4" />
+              <span>Real Estate Development</span>
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Turnkey architectural consulting, municipal submission drawings, structural engineering, and construction cost estimates tailored for Pakistani residential and commercial developers.
+            </p>
+          </div>
+
+          <div class="bg-navy-900/60 border border-navy-700/60 p-6 rounded-2xl space-y-2">
+            <div class="text-accent-cyan font-extrabold text-sm flex items-center space-x-2">
+              <ShieldCheck class="w-4 h-4" />
+              <span>Direct Material Fulfillment</span>
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Every architectural blueprint is backed by AL-HRSH's direct distribution of certified Popular PPRC pipes, Fast Cables copper reels, Sonex sanitary fixtures, and Schneider switchgear.
+            </p>
+          </div>
+        </div>
+
+        <!-- Keyword Backlinks -->
+        <div class="pt-4 border-t border-navy-800 flex flex-wrap gap-2.5 items-center">
+          <span class="text-2xs font-bold text-slate-400 uppercase tracking-wider mr-2 flex items-center space-x-1">
+            <Link2 class="w-3.5 h-3.5 text-accent-cyan" />
+            <span>Collaboration Backlinks:</span>
+          </span>
+          <a href="https://h-q-design-services.vercel.app/" target="_blank" rel="noopener noreferrer" class="text-2xs bg-navy-950 hover:bg-brand-900/60 border border-navy-700 text-slate-300 hover:text-accent-cyan px-3 py-1 rounded-lg transition-colors">
+            Best Architects in Lahore
+          </a>
+          <a href="https://h-q-design-services.vercel.app/" target="_blank" rel="noopener noreferrer" class="text-2xs bg-navy-950 hover:bg-brand-900/60 border border-navy-700 text-slate-300 hover:text-accent-cyan px-3 py-1 rounded-lg transition-colors">
+            3D Elevation &amp; House Design
+          </a>
+          <a href="https://h-q-design-services.vercel.app/" target="_blank" rel="noopener noreferrer" class="text-2xs bg-navy-950 hover:bg-brand-900/60 border border-navy-700 text-slate-300 hover:text-accent-cyan px-3 py-1 rounded-lg transition-colors">
+            Real Estate Agency Partner
+          </a>
+          <a href="https://h-q-design-services.vercel.app/" target="_blank" rel="noopener noreferrer" class="text-2xs bg-navy-950 hover:bg-brand-900/60 border border-navy-700 text-slate-300 hover:text-accent-cyan px-3 py-1 rounded-lg transition-colors">
+            DHA Lahore Architecture Studio
+          </a>
+          <a href="https://h-q-design-services.vercel.app/" target="_blank" rel="noopener noreferrer" class="text-2xs bg-navy-950 hover:bg-brand-900/60 border border-navy-700 text-slate-300 hover:text-accent-cyan px-3 py-1 rounded-lg transition-colors">
+            Pakistan House Construction Cost
+          </a>
+        </div>
+      </div>
+
       <!-- Contact Helpline Banner -->
       <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-card flex flex-col md:flex-row items-center justify-between gap-6">
         <div class="space-y-1 text-center md:text-left">
@@ -67,5 +160,5 @@
 </template>
 
 <script setup>
-import { Building2, ShieldCheck, Truck } from 'lucide-vue-next';
+import { Building2, ShieldCheck, Truck, Sparkles, Compass, Building, ExternalLink, Phone, Link2 } from 'lucide-vue-next';
 </script>

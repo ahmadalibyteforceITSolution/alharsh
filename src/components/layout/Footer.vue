@@ -64,60 +64,65 @@
             Premier supplier of genuine building, plumbing, electrical, and hardware materials. Authorized channel distributor for Popular Pipes Group, Fast Cables, Schneider Electric, and Sonex Sanitary.
           </p>
 
-          <!-- Social Media & Official Channels -->
-          <div class="space-y-2.5 pt-1">
-            <div class="text-2xs font-bold text-slate-300 uppercase tracking-wider flex items-center space-x-1.5">
-              <Share2 class="w-3.5 h-3.5 text-accent-cyan" />
-              <span>Official Social Media &amp; Channels:</span>
-            </div>
-            
-            <div class="flex items-center space-x-2.5 flex-wrap gap-y-2">
-              <!-- Facebook -->
-              <a 
-                href="https://www.facebook.com/AlHRSHstore" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                class="flex items-center space-x-1.5 bg-[#1877F2] hover:bg-[#166fe5] text-white px-3 py-2 rounded-xl text-xs font-bold shadow transition-all hover:scale-105"
-                title="Follow us on Facebook"
-              >
-                <Facebook class="w-4 h-4 fill-current" />
-                <span>Facebook</span>
-              </a>
+          <!-- Social Media Icons (Only Icons) -->
+          <div class="flex items-center space-x-2.5 pt-1">
+            <!-- Facebook -->
+            <a 
+              href="https://www.facebook.com/AlHRSHstore" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="w-8 h-8 rounded-lg bg-[#1877F2]/20 hover:bg-[#1877F2] text-[#1877F2] hover:text-white border border-[#1877F2]/40 flex items-center justify-center transition-all hover:scale-110 shadow-sm"
+              title="Follow us on Facebook"
+              aria-label="Facebook"
+            >
+              <Facebook class="w-4 h-4 fill-current" />
+            </a>
 
-              <!-- WhatsApp -->
-              <a 
-                href="https://wa.me/923029355294" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                class="flex items-center space-x-1.5 bg-[#25D366] hover:bg-[#20bd5a] text-white px-3 py-2 rounded-xl text-xs font-bold shadow transition-all hover:scale-105"
-                title="Chat on WhatsApp (+92 302 9355294)"
-              >
-                <MessageCircle class="w-4 h-4 fill-current" />
-                <span>WhatsApp</span>
-              </a>
+            <!-- WhatsApp -->
+            <a 
+              href="https://wa.me/923029355294" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="w-8 h-8 rounded-lg bg-[#25D366]/20 hover:bg-[#25D366] text-[#25D366] hover:text-white border border-[#25D366]/40 flex items-center justify-center transition-all hover:scale-110 shadow-sm"
+              title="Chat on WhatsApp (+92 302 9355294)"
+              aria-label="WhatsApp"
+            >
+              <MessageCircle class="w-4 h-4 fill-current" />
+            </a>
 
-              <!-- Email -->
-              <a 
-                href="mailto:alhrsh114333@gmail.com" 
-                class="flex items-center space-x-1.5 bg-rose-600 hover:bg-rose-500 text-white px-3 py-2 rounded-xl text-xs font-bold shadow transition-all hover:scale-105"
-                title="Send Email to alhrsh114333@gmail.com"
-              >
-                <Mail class="w-4 h-4" />
-                <span>Email Us</span>
-              </a>
+            <!-- Email -->
+            <a 
+              href="mailto:alhrsh114333@gmail.com" 
+              class="w-8 h-8 rounded-lg bg-rose-600/20 hover:bg-rose-600 text-rose-400 hover:text-white border border-rose-600/40 flex items-center justify-center transition-all hover:scale-110 shadow-sm"
+              title="Send Email to alhrsh114333@gmail.com"
+              aria-label="Email"
+            >
+              <Mail class="w-4 h-4" />
+            </a>
 
-              <!-- Google Maps -->
-              <a 
-                href="https://www.google.com/maps/place/Al-HRSH+Electrical+Hardware+and+Saintary+Store/@31.413118,74.3738413,17z" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                class="flex items-center space-x-1.5 bg-slate-800 hover:bg-slate-700 text-accent-cyan px-3 py-2 rounded-xl text-xs font-bold border border-slate-700 shadow transition-all hover:scale-105"
-                title="View Location on Google Maps"
-              >
-                <MapPin class="w-4 h-4 text-rose-400" />
-                <span>Maps Location</span>
-              </a>
-            </div>
+            <!-- Google Maps -->
+            <a 
+              href="https://www.google.com/maps/place/Al-HRSH+Electrical+Hardware+and+Saintary+Store/@31.413118,74.3738413,17z" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-rose-400 hover:text-rose-300 border border-slate-700 flex items-center justify-center transition-all hover:scale-110 shadow-sm"
+              title="View Location on Google Maps"
+              aria-label="Google Maps"
+            >
+              <MapPin class="w-4 h-4" />
+            </a>
+
+            <!-- Partner Link Icon: H&Q Design Services -->
+            <a 
+              href="https://h-q-design-services.vercel.app/" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="w-8 h-8 rounded-lg bg-brand-500/20 hover:bg-brand-600 text-accent-cyan hover:text-white border border-brand-500/40 flex items-center justify-center transition-all hover:scale-110 shadow-sm"
+              title="Collaboration Real Estate & Architectural Partner: H&Q Design Services (Best Architects in Lahore)"
+              aria-label="H&Q Design Services"
+            >
+              <Globe class="w-4 h-4" />
+            </a>
           </div>
         </div>
 
@@ -178,7 +183,7 @@
       <!-- Bottom Bar -->
       <div class="border-t border-navy-800 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-2xs text-slate-400">
         <div>
-          &copy; {{ new Date().getFullYear() }} AL-HRSH Electrical, Hardware &amp; Sanitary Store. All rights reserved.
+          &copy; {{ new Date().getFullYear() }} AL-HRSH Electrical, Hardware &amp; Sanitary Store. All rights reserved. • Partner: <a href="https://h-q-design-services.vercel.app/" target="_blank" rel="noopener noreferrer" class="text-accent-cyan hover:underline font-medium">H&amp;Q Design Services</a>
         </div>
         <div class="flex items-center space-x-4">
           <router-link to="/policies" class="hover:text-white transition-colors">Privacy Policy</router-link>
@@ -193,7 +198,18 @@
 </template>
 
 <script setup>
-import { ShieldCheck, Truck, Headphones, FileSpreadsheet, MapPin, Facebook, MessageCircle, Navigation, Mail, Share2 } from 'lucide-vue-next';
+import { 
+  ShieldCheck, 
+  Truck, 
+  Headphones, 
+  FileSpreadsheet, 
+  MapPin, 
+  Facebook, 
+  MessageCircle, 
+  Navigation, 
+  Mail, 
+  Globe 
+} from 'lucide-vue-next';
 </script>
 
 <style scoped>

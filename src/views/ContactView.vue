@@ -134,6 +134,38 @@
             </div>
           </div>
 
+          <!-- Real Estate & Architecture Collaboration Partner Card -->
+          <div class="bg-gradient-to-br from-navy-950 via-slate-900 to-navy-900 rounded-3xl p-6 text-white border border-navy-700 shadow-card space-y-3">
+            <div class="flex items-center space-x-2 text-2xs font-extrabold uppercase tracking-wider text-accent-cyan">
+              <Sparkles class="w-3.5 h-3.5" />
+              <span>Real Estate &amp; Architecture Partner</span>
+            </div>
+            <h3 class="text-sm font-extrabold text-white">
+              H&amp;Q Design Services (HANDQ)
+            </h3>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Need architectural drawings, 3D front elevations, luxury villa floor plans, or DHA Lahore building submissions?
+            </p>
+            <div class="pt-2 flex flex-wrap gap-2">
+              <a 
+                href="https://h-q-design-services.vercel.app/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs px-4 py-2 rounded-xl inline-flex items-center space-x-1.5 transition-all shadow"
+              >
+                <span>Visit Partner Website</span>
+                <ExternalLink class="w-3.5 h-3.5" />
+              </a>
+              <a 
+                href="tel:+923416887454" 
+                class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs px-3.5 py-2 rounded-xl inline-flex items-center space-x-1.5 transition-all"
+              >
+                <Phone class="w-3.5 h-3.5 text-accent-cyan" />
+                <span>0341-6887454</span>
+              </a>
+            </div>
+          </div>
+
           <!-- Embedded Google Map -->
           <div class="bg-white rounded-3xl p-4 border border-slate-200 shadow-card overflow-hidden space-y-2">
             <div class="flex items-center justify-between text-xs px-2 font-bold text-slate-700">
@@ -248,7 +280,7 @@
 <script setup>
 import { ref } from 'vue';
 import api from '../services/api';
-import { Phone, MessageCircle, Mail, MapPin, CheckCircle, Send, Facebook } from 'lucide-vue-next';
+import { Phone, MessageCircle, Mail, MapPin, CheckCircle, Send, Facebook, Sparkles, ExternalLink } from 'lucide-vue-next';
 
 const form = ref({
   name: '',

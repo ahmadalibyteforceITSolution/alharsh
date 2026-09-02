@@ -18,6 +18,9 @@
     <!-- Why Choose Us -->
     <WhyChooseUs />
 
+    <!-- Official Real Estate & Architectural Collaboration Section -->
+    <CollaborationSection />
+
     <!-- Brand Partners -->
     <BrandPartners />
 
@@ -35,6 +38,7 @@ import PipesShowcase from '../components/home/PipesShowcase.vue';
 import FeaturedShowcase from '../components/home/FeaturedShowcase.vue';
 import BulkQuoteSection from '../components/home/BulkQuoteSection.vue';
 import WhyChooseUs from '../components/home/WhyChooseUs.vue';
+import CollaborationSection from '../components/home/CollaborationSection.vue';
 import BrandPartners from '../components/home/BrandPartners.vue';
 import Testimonials from '../components/home/Testimonials.vue';
 

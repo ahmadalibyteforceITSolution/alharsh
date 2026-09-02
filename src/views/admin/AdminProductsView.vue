@@ -113,7 +113,12 @@
                   </div>
                   <div>
                     <div class="font-bold text-white max-w-xs truncate">{{ item.name }}</div>
-                    <div class="text-2xs text-slate-400 mt-0.5">{{ item.specifications?.length || 0 }} specs configured</div>
+                    <div class="flex items-center gap-2 mt-0.5">
+                      <span class="text-2xs text-slate-400">{{ item.specifications?.length || 0 }} specs</span>
+                      <span v-if="item.variants && item.variants.length > 0" class="text-2xs bg-brand-900/80 text-accent-cyan px-2 py-0.5 rounded-md font-bold border border-brand-700/60">
+                        {{ item.variants.length }} Variants ({{ item.sizes?.length || 0 }} Sizes, {{ item.colors?.length || 0 }} Colors)
+                      </span>
+                    </div>
                   </div>
                 </div>
               </td>
@@ -208,15 +213,15 @@
           <!-- Pricing & Stock -->
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
             <div>
-              <label class="block font-bold text-slate-300 mb-1">Price (Rs.) *</label>
+              <label class="block font-bold text-slate-300 mb-1">Base Price (Rs.) *</label>
               <input v-model.number="form.price" type="number" required placeholder="1850" class="w-full bg-slate-800 border border-slate-700 text-white px-3.5 py-2.5 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none" />
             </div>
             <div>
-              <label class="block font-bold text-slate-300 mb-1">Sale Price (Optional)</label>
+              <label class="block font-bold text-slate-300 mb-1">Base Sale Price (Optional)</label>
               <input v-model.number="form.salePrice" type="number" placeholder="1650" class="w-full bg-slate-800 border border-slate-700 text-white px-3.5 py-2.5 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none" />
             </div>
             <div>
-              <label class="block font-bold text-slate-300 mb-1">Stock Quantity</label>
+              <label class="block font-bold text-slate-300 mb-1">Total Stock</label>
               <input v-model.number="form.stock" type="number" placeholder="50" class="w-full bg-slate-800 border border-slate-700 text-white px-3.5 py-2.5 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none" />
             </div>
             <div>
@@ -231,6 +236,88 @@
                 <option value="Pair">Pair</option>
                 <option value="Pack">Pack</option>
               </select>
+            </div>
+          </div>
+
+          <!-- Product Variants (Sizes & Colors) Builder -->
+          <div class="space-y-3 bg-slate-800/60 p-4 rounded-2xl border border-slate-700">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-700/80 pb-3">
+              <div>
+                <div class="flex items-center space-x-2">
+                  <Layers class="w-4 h-4 text-accent-cyan" />
+                  <label class="font-extrabold text-white text-xs uppercase tracking-wider">Product Variants (Sizes &amp; Colors)</label>
+                </div>
+                <p class="text-2xs text-slate-400 mt-0.5">Add selectable sizes, colors, and custom pricing for this product</p>
+              </div>
+
+              <!-- Quick Presets -->
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <span class="text-2xs text-slate-400 font-bold">Quick Presets:</span>
+                <button type="button" @click="applyPipePreset" class="text-2xs bg-brand-900 hover:bg-brand-800 text-accent-cyan px-2 py-1 rounded-lg border border-brand-700 font-bold transition-colors">
+                  + Pipe Sizes
+                </button>
+                <button type="button" @click="applyCablePreset" class="text-2xs bg-red-950 hover:bg-red-900 text-red-300 px-2 py-1 rounded-lg border border-red-800 font-bold transition-colors">
+                  + Cable Gauges
+                </button>
+                <button type="button" @click="applyColorPreset" class="text-2xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-2 py-1 rounded-lg border border-slate-600 font-bold transition-colors">
+                  + Colors
+                </button>
+                <button type="button" @click="addVariantRow" class="text-2xs bg-emerald-900 hover:bg-emerald-800 text-emerald-300 px-2.5 py-1 rounded-lg border border-emerald-700 font-bold transition-colors flex items-center space-x-1">
+                  <Plus class="w-3 h-3" />
+                  <span>Add Row</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Variants Table / Rows -->
+            <div v-if="form.variants && form.variants.length > 0" class="space-y-2">
+              <div class="grid grid-cols-12 gap-2 text-2xs font-extrabold text-slate-400 uppercase tracking-wider px-1 hidden sm:grid">
+                <div class="col-span-3">Size Option</div>
+                <div class="col-span-3">Color Option</div>
+                <div class="col-span-2">Price (Rs.)</div>
+                <div class="col-span-2">Sale Price</div>
+                <div class="col-span-1">Stock</div>
+                <div class="col-span-1 text-right">Del</div>
+              </div>
+
+              <div v-for="(v, index) in form.variants" :key="index" class="grid grid-cols-1 sm:grid-cols-12 gap-2 items-center bg-slate-900/80 p-2.5 rounded-xl border border-slate-800">
+                <div class="sm:col-span-3">
+                  <label class="block sm:hidden text-2xs text-slate-400 font-bold mb-0.5">Size:</label>
+                  <input v-model="v.size" placeholder="e.g. 25mm (3/4 Inch)" class="w-full bg-slate-800 border border-slate-700 text-white px-2.5 py-1.5 rounded-lg text-xs focus:ring-1 focus:ring-brand-500 focus:outline-none" />
+                </div>
+                <div class="sm:col-span-3">
+                  <label class="block sm:hidden text-2xs text-slate-400 font-bold mb-0.5">Color:</label>
+                  <input v-model="v.color" placeholder="e.g. Green / Matte Black" class="w-full bg-slate-800 border border-slate-700 text-white px-2.5 py-1.5 rounded-lg text-xs focus:ring-1 focus:ring-brand-500 focus:outline-none" />
+                </div>
+                <div class="sm:col-span-2">
+                  <label class="block sm:hidden text-2xs text-slate-400 font-bold mb-0.5">Price (Rs.):</label>
+                  <input v-model.number="v.price" type="number" placeholder="1850" class="w-full bg-slate-800 border border-slate-700 text-white px-2.5 py-1.5 rounded-lg text-xs focus:ring-1 focus:ring-brand-500 focus:outline-none" />
+                </div>
+                <div class="sm:col-span-2">
+                  <label class="block sm:hidden text-2xs text-slate-400 font-bold mb-0.5">Sale Price:</label>
+                  <input v-model.number="v.salePrice" type="number" placeholder="1650" class="w-full bg-slate-800 border border-slate-700 text-white px-2.5 py-1.5 rounded-lg text-xs focus:ring-1 focus:ring-brand-500 focus:outline-none" />
+                </div>
+                <div class="sm:col-span-1">
+                  <label class="block sm:hidden text-2xs text-slate-400 font-bold mb-0.5">Stock:</label>
+                  <input v-model.number="v.stock" type="number" placeholder="50" class="w-full bg-slate-800 border border-slate-700 text-white px-2 py-1.5 rounded-lg text-xs focus:ring-1 focus:ring-brand-500 focus:outline-none" />
+                </div>
+                <div class="sm:col-span-1 text-right flex justify-end">
+                  <button type="button" @click="form.variants.splice(index, 1)" class="text-rose-400 hover:text-rose-300 p-1.5 rounded-lg hover:bg-rose-950 transition-colors" title="Delete Variant">
+                    <Trash2 class="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+
+              <div class="flex justify-between items-center pt-2">
+                <span class="text-2xs text-slate-400">{{ form.variants.length }} variant rows configured</span>
+                <button type="button" @click="form.variants = []" class="text-2xs text-rose-400 hover:underline">
+                  Clear All Variants
+                </button>
+              </div>
+            </div>
+
+            <div v-else class="text-center py-4 text-slate-400 text-2xs border border-dashed border-slate-700 rounded-xl">
+              No size/color variants added. This product will be sold as a single standard item. Click "+ Add Row" or use presets above.
             </div>
           </div>
 
@@ -337,7 +424,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import { useAdminStore } from '../../stores/admin';
-import { Plus, Search, Package, Edit2, Trash2, X, CheckCircle, Save, AlertTriangle } from 'lucide-vue-next';
+import { Plus, Search, Package, Edit2, Trash2, X, CheckCircle, Save, AlertTriangle, Layers } from 'lucide-vue-next';
 
 const adminStore = useAdminStore();
 const searchQuery = ref('');
@@ -372,6 +459,9 @@ const form = ref({
     { label: 'Pressure Rating', value: 'PN-20' },
     { label: 'Standard', value: 'DIN 8077/8078' }
   ],
+  sizes: [],
+  colors: [],
+  variants: [],
   featured: true,
   bestSeller: false,
   isNewArrival: true
@@ -419,6 +509,9 @@ const openAddModal = () => {
       { label: 'Pressure Rating', value: 'PN-20' },
       { label: 'Warranty', value: '50 Years Guarantee' }
     ],
+    sizes: [],
+    colors: [],
+    variants: [],
     featured: true,
     bestSeller: false,
     isNewArrival: true
@@ -431,7 +524,98 @@ const openEditModal = (item) => {
   form.value = JSON.parse(JSON.stringify(item));
   if (!form.value.images || form.value.images.length === 0) form.value.images = ['/images/placeholder.svg'];
   if (!form.value.specifications) form.value.specifications = [];
+  if (!form.value.variants) form.value.variants = [];
+  if (!form.value.sizes) form.value.sizes = [];
+  if (!form.value.colors) form.value.colors = [];
   isModalOpen.value = true;
+};
+
+const addVariantRow = () => {
+  if (!form.value.variants) form.value.variants = [];
+  form.value.variants.push({
+    size: '',
+    color: '',
+    title: '',
+    sku: '',
+    price: form.value.price || 1500,
+    salePrice: form.value.salePrice || null,
+    stock: 25,
+    unit: form.value.unit || 'Piece',
+    image: ''
+  });
+};
+
+const applyPipePreset = () => {
+  if (!form.value.variants) form.value.variants = [];
+  const pipeSizes = [
+    { size: '20mm (1/2")', price: 1450, salePrice: null },
+    { size: '25mm (3/4")', price: 1850, salePrice: 1650 },
+    { size: '32mm (1")', price: 2850, salePrice: null },
+    { size: '40mm (1-1/4")', price: 4200, salePrice: null },
+    { size: '50mm (1-1/2")', price: 6100, salePrice: null },
+    { size: '63mm (2")', price: 9200, salePrice: null }
+  ];
+  
+  pipeSizes.forEach(p => {
+    form.value.variants.push({
+      size: p.size,
+      color: 'Green (Standard PPRC)',
+      title: `${p.size} - Green`,
+      sku: `${form.value.sku || 'ALH-PIP'}-${p.size.substring(0, 4).trim()}`,
+      price: p.price,
+      salePrice: p.salePrice,
+      stock: 40,
+      unit: 'Length (4 Meter)',
+      image: ''
+    });
+  });
+  toastMessage.value = 'Added 6 standard pipe size variants!';
+};
+
+const applyCablePreset = () => {
+  if (!form.value.variants) form.value.variants = [];
+  const cableGauges = [
+    { size: '3/29 (Single Core)', price: 9200, color: 'Red' },
+    { size: '3/29 (Single Core)', price: 9200, color: 'Black' },
+    { size: '7/29 (Single Core)', price: 17500, color: 'Red' },
+    { size: '7/29 (Single Core)', price: 17500, color: 'Black' },
+    { size: '7/36 (Single Core)', price: 26500, color: 'Red' },
+    { size: '7/44 (Single Core)', price: 34500, color: 'Red' }
+  ];
+
+  cableGauges.forEach(c => {
+    form.value.variants.push({
+      size: c.size,
+      color: c.color,
+      title: `${c.size} - ${c.color}`,
+      sku: `${form.value.sku || 'ALH-CAB'}-${c.size.substring(0, 4).trim()}-${c.color.substring(0, 3)}`,
+      price: c.price,
+      salePrice: null,
+      stock: 20,
+      unit: 'Coil (90 Meter)',
+      image: ''
+    });
+  });
+  toastMessage.value = 'Added standard Fast Cables wire variants!';
+};
+
+const applyColorPreset = () => {
+  if (!form.value.variants) form.value.variants = [];
+  const colors = ['White', 'Matte Black', 'Chrome Silver', 'Gold Brass', 'Ivory'];
+  colors.forEach(col => {
+    form.value.variants.push({
+      size: 'Standard',
+      color: col,
+      title: `${col} Finish`,
+      sku: `${form.value.sku || 'ALH-COL'}-${col.substring(0, 3).toUpperCase()}`,
+      price: form.value.price || 2500,
+      salePrice: form.value.salePrice || null,
+      stock: 15,
+      unit: form.value.unit || 'Piece',
+      image: ''
+    });
+  });
+  toastMessage.value = 'Added color variants!';
 };
 
 const addImageUrl = () => {

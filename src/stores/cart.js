@@ -27,24 +27,35 @@ export const useCartStore = defineStore('cart', {
       localStorage.setItem('alharsh_cart', JSON.stringify(this.items));
     },
 
-    addItem(product, quantity = 1) {
-      const existing = this.items.find(i => i._id === product._id);
-      const effectivePrice = product.salePrice && product.salePrice < product.price ? product.salePrice : product.price;
+    addItem(product, quantity = 1, selectedVariant = null, selectedSize = '', selectedColor = '') {
+      const sizeVal = selectedVariant?.size || selectedSize || '';
+      const colorVal = selectedVariant?.color || selectedColor || '';
+      const cartItemId = `${product._id}_${sizeVal}_${colorVal}`;
+
+      const priceVal = selectedVariant?.price !== undefined && selectedVariant?.price !== null ? selectedVariant.price : product.price;
+      const salePriceVal = selectedVariant?.salePrice !== undefined && selectedVariant?.salePrice !== null ? selectedVariant.salePrice : product.salePrice;
+      const effectivePrice = salePriceVal && salePriceVal < priceVal ? salePriceVal : priceVal;
+
+      const existing = this.items.find(i => i.cartItemId === cartItemId || (!i.cartItemId && i._id === cartItemId));
 
       if (existing) {
         existing.quantity += quantity;
       } else {
         this.items.push({
+          cartItemId,
           _id: product._id,
           name: product.name,
-          sku: product.sku || '',
+          variantTitle: selectedVariant?.title || (sizeVal || colorVal ? `${sizeVal} ${colorVal}`.trim() : ''),
+          size: sizeVal,
+          color: colorVal,
+          sku: selectedVariant?.sku || product.sku || '',
           category: product.category,
           price: effectivePrice,
-          originalPrice: product.price,
-          unit: product.unit || 'Piece',
-          image: product.images && product.images.length > 0 ? product.images[0] : '/logo.png',
+          originalPrice: priceVal,
+          unit: selectedVariant?.unit || product.unit || 'Piece',
+          image: selectedVariant?.image || (product.images && product.images.length > 0 ? product.images[0] : '/logo.png'),
           quantity: quantity,
-          stock: product.stock
+          stock: selectedVariant?.stock !== undefined ? selectedVariant.stock : product.stock
         });
       }
 
@@ -52,11 +63,11 @@ export const useCartStore = defineStore('cart', {
       this.isDrawerOpen = true;
     },
 
-    updateQuantity(id, quantity) {
-      const item = this.items.find(i => i._id === id);
+    updateQuantity(cartItemIdOrId, quantity) {
+      const item = this.items.find(i => i.cartItemId === cartItemIdOrId || i._id === cartItemIdOrId);
       if (item) {
         if (quantity <= 0) {
-          this.removeItem(id);
+          this.removeItem(cartItemIdOrId);
         } else {
           item.quantity = quantity;
           this.saveToStorage();
@@ -64,8 +75,8 @@ export const useCartStore = defineStore('cart', {
       }
     },
 
-    removeItem(id) {
-      this.items = this.items.filter(i => i._id !== id);
+    removeItem(cartItemIdOrId) {
+      this.items = this.items.filter(i => i.cartItemId !== cartItemIdOrId && i._id !== cartItemIdOrId);
       this.saveToStorage();
       if (this.appliedCoupon) {
         this.recalculateDiscount();

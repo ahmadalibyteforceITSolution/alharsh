@@ -179,11 +179,16 @@
 
           <!-- Mini Items List -->
           <div class="max-h-60 overflow-y-auto divide-y divide-slate-100 pr-1 space-y-2">
-            <div v-for="item in cartStore.items" :key="item._id" class="pt-2 flex items-center justify-between gap-3 text-xs">
+            <div v-for="item in cartStore.items" :key="item.cartItemId || item._id" class="pt-2 flex items-center justify-between gap-3 text-xs">
               <div class="flex items-center space-x-2.5 min-w-0">
                 <img :src="item.image" :alt="item.name" class="w-10 h-10 object-cover rounded-lg border border-slate-200 shrink-0" />
                 <div class="truncate">
                   <div class="font-bold text-slate-900 truncate">{{ item.name }}</div>
+                  <div v-if="item.size || item.color" class="text-2xs text-brand-700 font-semibold">
+                    <span v-if="item.size">Size: {{ item.size }}</span>
+                    <span v-if="item.size && item.color"> &bull; </span>
+                    <span v-if="item.color">Color: {{ item.color }}</span>
+                  </div>
                   <div class="text-2xs text-slate-500">Qty: {{ item.quantity }} &times; Rs. {{ item.price.toLocaleString() }}</div>
                 </div>
               </div>
@@ -272,6 +277,9 @@ const placeOrder = async () => {
         product: item._id,
         name: item.name,
         sku: item.sku,
+        size: item.size || '',
+        color: item.color || '',
+        variantTitle: item.variantTitle || '',
         price: item.price,
         quantity: item.quantity,
         unit: item.unit,

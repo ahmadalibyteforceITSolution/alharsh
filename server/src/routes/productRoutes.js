@@ -116,6 +116,9 @@ router.post('/', async (req, res) => {
       shortDescription,
       specifications,
       features,
+      sizes,
+      colors,
+      variants,
       featured,
       bestSeller,
       isNewArrival,
@@ -142,6 +145,42 @@ router.post('/', async (req, res) => {
       cleanFeatures = features.filter(f => typeof f === 'string' && f.trim().length > 0);
     }
 
+    // Clean sizes & colors list
+    let cleanSizes = [];
+    if (Array.isArray(sizes)) {
+      cleanSizes = sizes.map(s => typeof s === 'string' ? s.trim() : '').filter(s => s.length > 0);
+    }
+    let cleanColors = [];
+    if (Array.isArray(colors)) {
+      cleanColors = colors.map(c => typeof c === 'string' ? c.trim() : '').filter(c => c.length > 0);
+    }
+
+    // Clean variants array
+    let cleanVariants = [];
+    if (Array.isArray(variants)) {
+      cleanVariants = variants
+        .filter(v => v && (v.size || v.color || v.title || v.price))
+        .map(v => ({
+          title: (v.title || `${v.size || ''} ${v.color || ''}`).trim(),
+          size: v.size ? v.size.trim() : '',
+          color: v.color ? v.color.trim() : '',
+          sku: v.sku ? v.sku.trim().toUpperCase() : `${generatedSku}-${(v.size || v.color || 'VAR').substring(0, 4).toUpperCase()}`,
+          price: v.price !== undefined && v.price !== null ? Number(v.price) : Number(price),
+          salePrice: v.salePrice ? Number(v.salePrice) : null,
+          stock: v.stock !== undefined && v.stock !== null ? Number(v.stock) : Number(stock || 25),
+          unit: v.unit ? v.unit.trim() : (unit || 'Piece'),
+          image: v.image ? v.image.trim() : ''
+        }));
+
+      // Infer sizes & colors if not explicitly provided
+      if (cleanSizes.length === 0) {
+        cleanSizes = [...new Set(cleanVariants.map(v => v.size).filter(s => s))];
+      }
+      if (cleanColors.length === 0) {
+        cleanColors = [...new Set(cleanVariants.map(v => v.color).filter(c => c))];
+      }
+    }
+
     // Clean images
     let cleanImages = Array.isArray(images) && images.length > 0 
       ? images.filter(img => img && img.trim()) 
@@ -163,6 +202,9 @@ router.post('/', async (req, res) => {
       shortDescription: shortDescription || (description ? description.substring(0, 160) : ''),
       specifications: cleanSpecs,
       features: cleanFeatures,
+      sizes: cleanSizes,
+      colors: cleanColors,
+      variants: cleanVariants,
       featured: Boolean(featured),
       bestSeller: Boolean(bestSeller),
       isNewArrival: Boolean(isNewArrival),
@@ -173,11 +215,11 @@ router.post('/', async (req, res) => {
     });
 
     const saved = await product.save();
-    console.log(`✅ Product saved to MongoDB: "${saved.name}" (ID: ${saved._id})`);
+    console.log(`✅ Product saved to MongoDB: "${saved.name}" (ID: ${saved._id}, Variants: ${saved.variants?.length || 0})`);
 
     res.status(201).json({
       success: true,
-      message: 'Product and all specifications saved in MongoDB successfully!',
+      message: 'Product and variants saved in MongoDB successfully!',
       product: saved
     });
   } catch (error) {
@@ -198,6 +240,28 @@ router.put('/:id', async (req, res) => {
     if (req.body.stock !== undefined) req.body.stock = Number(req.body.stock);
     if (Array.isArray(req.body.specifications)) {
       req.body.specifications = req.body.specifications.filter(s => s && s.label && s.value);
+    }
+    if (Array.isArray(req.body.variants)) {
+      req.body.variants = req.body.variants
+        .filter(v => v && (v.size || v.color || v.title || v.price))
+        .map(v => ({
+          title: (v.title || `${v.size || ''} ${v.color || ''}`).trim(),
+          size: v.size ? v.size.trim() : '',
+          color: v.color ? v.color.trim() : '',
+          sku: v.sku ? v.sku.trim().toUpperCase() : '',
+          price: v.price !== undefined && v.price !== null ? Number(v.price) : Number(req.body.price || 0),
+          salePrice: v.salePrice ? Number(v.salePrice) : null,
+          stock: v.stock !== undefined && v.stock !== null ? Number(v.stock) : 25,
+          unit: v.unit ? v.unit.trim() : (req.body.unit || 'Piece'),
+          image: v.image ? v.image.trim() : ''
+        }));
+      
+      if (!req.body.sizes || req.body.sizes.length === 0) {
+        req.body.sizes = [...new Set(req.body.variants.map(v => v.size).filter(s => s))];
+      }
+      if (!req.body.colors || req.body.colors.length === 0) {
+        req.body.colors = [...new Set(req.body.variants.map(v => v.color).filter(c => c))];
+      }
     }
 
     const product = await Product.findByIdAndUpdate(id, req.body, { new: true, runValidators: true });

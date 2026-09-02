@@ -107,22 +107,69 @@
               <!-- Price Box -->
               <div class="bg-brand-50/70 p-4 rounded-2xl border border-brand-100/80 flex items-baseline justify-between flex-wrap gap-2">
                 <div>
-                  <div class="text-2xs text-slate-500 uppercase tracking-wider font-bold">Trade Price</div>
+                  <div class="text-2xs text-slate-500 uppercase tracking-wider font-bold">
+                    {{ currentVariant ? 'Variant Price' : 'Trade Price' }}
+                  </div>
                   <div class="flex items-baseline space-x-3">
                     <span class="text-2xl sm:text-3xl font-extrabold text-brand-900">
-                      Rs. {{ (product.salePrice || product.price).toLocaleString() }}
+                      Rs. {{ currentPrice.toLocaleString() }}
                     </span>
-                    <span v-if="product.salePrice && product.salePrice < product.price" class="text-sm text-slate-400 line-through">
-                      Rs. {{ product.price.toLocaleString() }}
+                    <span v-if="currentSalePrice && currentSalePrice < currentOriginalPrice" class="text-sm text-slate-400 line-through">
+                      Rs. {{ currentOriginalPrice.toLocaleString() }}
                     </span>
-                    <span class="text-xs font-semibold text-slate-600">/ {{ product.unit || 'Piece' }}</span>
+                    <span class="text-xs font-semibold text-slate-600">/ {{ currentVariant?.unit || product.unit || 'Piece' }}</span>
                   </div>
                 </div>
                 <div class="text-right">
                   <div class="text-2xs text-slate-500 font-medium">Availability</div>
-                  <div :class="product.stock > 0 ? 'text-emerald-600 font-bold text-xs' : 'text-rose-600 font-bold text-xs'">
-                    {{ product.stock > 0 ? `In Stock (${product.stock} units ready)` : 'Currently Out of Stock' }}
+                  <div :class="currentStock > 0 ? 'text-emerald-600 font-bold text-xs' : 'text-rose-600 font-bold text-xs'">
+                    {{ currentStock > 0 ? `In Stock (${currentStock} units ready)` : 'Currently Out of Stock' }}
                   </div>
+                </div>
+              </div>
+
+              <!-- Available Sizes Selector -->
+              <div v-if="availableSizes.length > 0" class="space-y-2 pt-1">
+                <div class="flex justify-between items-center text-xs">
+                  <span class="font-bold text-slate-800">Select Size / Gauge:</span>
+                  <span class="text-brand-800 font-extrabold">{{ selectedSize || 'Choose Size' }}</span>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                  <button 
+                    v-for="size in availableSizes" 
+                    :key="size"
+                    @click="selectSize(size)"
+                    type="button"
+                    class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all border"
+                    :class="selectedSize === size 
+                      ? 'bg-brand-800 text-white border-brand-800 shadow-md ring-2 ring-brand-200' 
+                      : 'bg-white hover:bg-slate-50 text-slate-700 border-slate-300 hover:border-brand-500'"
+                  >
+                    {{ size }}
+                  </button>
+                </div>
+              </div>
+
+              <!-- Available Colors Selector -->
+              <div v-if="availableColors.length > 0" class="space-y-2 pt-1">
+                <div class="flex justify-between items-center text-xs">
+                  <span class="font-bold text-slate-800">Select Color / Finish:</span>
+                  <span class="text-brand-800 font-extrabold">{{ selectedColor || 'Choose Color' }}</span>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                  <button 
+                    v-for="col in availableColors" 
+                    :key="col"
+                    @click="selectColor(col)"
+                    type="button"
+                    class="px-3 py-1.5 rounded-xl text-xs font-semibold transition-all border flex items-center space-x-2"
+                    :class="selectedColor === col 
+                      ? 'bg-slate-900 text-white border-slate-900 shadow-md ring-2 ring-brand-200' 
+                      : 'bg-white hover:bg-slate-50 text-slate-700 border-slate-300 hover:border-slate-500'"
+                  >
+                    <span :class="getColorDotClass(col)" class="w-3.5 h-3.5 rounded-full border shadow-inner shrink-0"></span>
+                    <span>{{ col }}</span>
+                  </button>
                 </div>
               </div>
 
@@ -152,16 +199,21 @@
                 <div class="flex items-center border border-slate-300 rounded-xl overflow-hidden bg-slate-50 shrink-0 justify-between sm:justify-start">
                   <button @click="quantity = Math.max(1, quantity - 1)" class="px-4 py-3 text-slate-700 hover:bg-slate-200 font-bold text-sm">-</button>
                   <span class="px-4 py-3 text-xs font-bold text-slate-900 min-w-10 text-center">{{ quantity }}</span>
-                  <button @click="quantity = Math.min(product.stock, quantity + 1)" class="px-4 py-3 text-slate-700 hover:bg-slate-200 font-bold text-sm">+</button>
+                  <button @click="quantity = Math.min(currentStock, quantity + 1)" class="px-4 py-3 text-slate-700 hover:bg-slate-200 font-bold text-sm">+</button>
                 </div>
 
                 <button 
                   @click="addToCart"
-                  :disabled="product.stock <= 0"
+                  :disabled="currentStock <= 0"
                   class="flex-1 bg-brand-800 hover:bg-brand-700 text-white font-bold text-xs sm:text-sm py-3.5 px-6 rounded-xl shadow-lg hover:shadow-glow transition-all flex items-center justify-center space-x-2 disabled:opacity-50"
                 >
                   <ShoppingCart class="w-5 h-5" />
-                  <span>Add To Cart &bull; Rs. {{ ((product.salePrice || product.price) * quantity).toLocaleString() }}</span>
+                  <span>
+                    Add To Cart &bull; Rs. {{ (currentPrice * quantity).toLocaleString() }}
+                    <span v-if="selectedSize || selectedColor" class="text-2xs font-normal opacity-90 block sm:inline sm:ml-1">
+                      ({{ [selectedSize, selectedColor].filter(Boolean).join(' - ') }})
+                    </span>
+                  </span>
                 </button>
               </div>
 
@@ -176,7 +228,7 @@
                 </button>
 
                 <a 
-                  :href="`https://wa.me/923029355294?text=Hello%20AL-HRSH,%20I%20am%20interested%20in%20ordering%20${encodeURIComponent(product.name)}%20(SKU:%20${product.sku}).`" 
+                  :href="`https://wa.me/923029355294?text=Hello%20AL-HRSH,%20I%20am%20interested%20in%20ordering%20${encodeURIComponent(product.name)}%20${selectedSize ? `(Size: ${encodeURIComponent(selectedSize)})` : ''}%20${selectedColor ? `(Color: ${encodeURIComponent(selectedColor)})` : ''}%20(SKU:%20${currentVariant?.sku || product.sku}).`" 
                   target="_blank"
                   class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold py-3 px-4 rounded-xl transition-colors flex items-center justify-center space-x-2 shadow-sm"
                 >
@@ -248,7 +300,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useProductStore } from '../stores/products';
 import { useCartStore } from '../stores/cart';
@@ -265,6 +317,105 @@ const activeImage = ref('');
 const quantity = ref(1);
 const loading = ref(true);
 
+const selectedSize = ref('');
+const selectedColor = ref('');
+
+// Computed Available Sizes
+const availableSizes = computed(() => {
+  if (!product.value) return [];
+  if (product.value.sizes && product.value.sizes.length > 0) return product.value.sizes;
+  if (product.value.variants && product.value.variants.length > 0) {
+    return [...new Set(product.value.variants.map(v => v.size).filter(s => s))];
+  }
+  return [];
+});
+
+// Computed Available Colors
+const availableColors = computed(() => {
+  if (!product.value) return [];
+  if (product.value.colors && product.value.colors.length > 0) return product.value.colors;
+  if (product.value.variants && product.value.variants.length > 0) {
+    return [...new Set(product.value.variants.map(v => v.color).filter(c => c))];
+  }
+  return [];
+});
+
+// Find Active Variant based on selected size & color
+const currentVariant = computed(() => {
+  if (!product.value || !product.value.variants || product.value.variants.length === 0) return null;
+  
+  return product.value.variants.find(v => {
+    const sizeMatch = !selectedSize.value || v.size === selectedSize.value;
+    const colorMatch = !selectedColor.value || v.color === selectedColor.value;
+    return sizeMatch && colorMatch;
+  }) || product.value.variants[0];
+});
+
+// Computed Live Price
+const currentPrice = computed(() => {
+  if (currentVariant.value) {
+    const sale = currentVariant.value.salePrice;
+    const base = currentVariant.value.price;
+    return (sale && sale < base) ? sale : base;
+  }
+  return (product.value?.salePrice && product.value?.salePrice < product.value?.price) 
+    ? product.value.salePrice 
+    : (product.value?.price || 0);
+});
+
+// Computed Live Original Price
+const currentOriginalPrice = computed(() => {
+  if (currentVariant.value) {
+    return currentVariant.value.price;
+  }
+  return product.value?.price || 0;
+});
+
+// Computed Live Sale Price
+const currentSalePrice = computed(() => {
+  if (currentVariant.value) {
+    return currentVariant.value.salePrice;
+  }
+  return product.value?.salePrice;
+});
+
+// Computed Live Stock
+const currentStock = computed(() => {
+  if (currentVariant.value && currentVariant.value.stock !== undefined) {
+    return currentVariant.value.stock;
+  }
+  return product.value?.stock || 0;
+});
+
+const getColorDotClass = (colorName) => {
+  const c = (colorName || '').toLowerCase();
+  if (c.includes('green')) return 'bg-emerald-500';
+  if (c.includes('red')) return 'bg-rose-500';
+  if (c.includes('black')) return 'bg-slate-900 border-slate-700';
+  if (c.includes('white')) return 'bg-white border-slate-300';
+  if (c.includes('ivory')) return 'bg-amber-100 border-amber-300';
+  if (c.includes('chrome') || c.includes('silver')) return 'bg-slate-300';
+  if (c.includes('gold') || c.includes('brass')) return 'bg-amber-400';
+  if (c.includes('blue')) return 'bg-blue-500';
+  if (c.includes('yellow')) return 'bg-yellow-400';
+  if (c.includes('grey') || c.includes('gray')) return 'bg-slate-500';
+  return 'bg-brand-500';
+};
+
+const selectSize = (size) => {
+  selectedSize.value = size;
+  if (currentVariant.value?.image) {
+    activeImage.value = currentVariant.value.image;
+  }
+};
+
+const selectColor = (col) => {
+  selectedColor.value = col;
+  if (currentVariant.value?.image) {
+    activeImage.value = currentVariant.value.image;
+  }
+};
+
 const loadProductData = async () => {
   loading.value = true;
   const idOrSlug = route.params.id;
@@ -274,13 +425,26 @@ const loadProductData = async () => {
     relatedProducts.value = data.related;
     activeImage.value = data.product.images?.[0] || '';
     quantity.value = 1;
+
+    // Initialize default selected size & color
+    if (availableSizes.value.length > 0) {
+      selectedSize.value = availableSizes.value[0];
+    } else {
+      selectedSize.value = '';
+    }
+
+    if (availableColors.value.length > 0) {
+      selectedColor.value = availableColors.value[0];
+    } else {
+      selectedColor.value = '';
+    }
   }
   loading.value = false;
 };
 
 const addToCart = () => {
   if (product.value) {
-    cartStore.addItem(product.value, quantity.value);
+    cartStore.addItem(product.value, quantity.value, currentVariant.value, selectedSize.value, selectedColor.value);
   }
 };
 

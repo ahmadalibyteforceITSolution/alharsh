@@ -56,10 +56,21 @@
           </router-link>
         </div>
 
-        <div v-for="item in cartStore.items" :key="item._id" class="py-4 flex gap-3">
+        <div v-for="item in cartStore.items" :key="item.cartItemId || item._id" class="py-4 flex gap-3">
           <img :src="item.image" :alt="item.name" class="w-16 h-16 object-cover rounded-lg border border-slate-200 shrink-0" />
           <div class="flex-1 min-w-0">
             <h4 class="text-xs font-bold text-slate-800 line-clamp-2">{{ item.name }}</h4>
+            
+            <!-- Variant Attributes (Size & Color) -->
+            <div v-if="item.size || item.color || item.variantTitle" class="flex flex-wrap gap-1.5 mt-1">
+              <span v-if="item.size" class="inline-flex items-center bg-brand-50 text-brand-800 border border-brand-200/60 px-1.5 py-0.5 rounded text-2xs font-bold">
+                Size: {{ item.size }}
+              </span>
+              <span v-if="item.color" class="inline-flex items-center bg-slate-100 text-slate-700 border border-slate-200 px-1.5 py-0.5 rounded text-2xs font-semibold">
+                Color: {{ item.color }}
+              </span>
+            </div>
+
             <div class="text-2xs text-slate-500 mt-0.5">{{ item.category }} &bull; Per {{ item.unit }}</div>
             <div class="flex items-center justify-between mt-2">
               <div class="text-xs font-extrabold text-brand-900">
@@ -69,13 +80,13 @@
               
               <!-- Quantity Stepper -->
               <div class="flex items-center border border-slate-300 rounded-md overflow-hidden">
-                <button @click="cartStore.updateQuantity(item._id, item.quantity - 1)" class="px-2 py-0.5 text-slate-600 hover:bg-slate-100 text-xs">-</button>
+                <button @click="cartStore.updateQuantity(item.cartItemId || item._id, item.quantity - 1)" class="px-2 py-0.5 text-slate-600 hover:bg-slate-100 text-xs">-</button>
                 <span class="px-2 py-0.5 text-xs font-semibold text-slate-800 bg-slate-50 min-w-6 text-center">{{ item.quantity }}</span>
-                <button @click="cartStore.updateQuantity(item._id, item.quantity + 1)" class="px-2 py-0.5 text-slate-600 hover:bg-slate-100 text-xs">+</button>
+                <button @click="cartStore.updateQuantity(item.cartItemId || item._id, item.quantity + 1)" class="px-2 py-0.5 text-slate-600 hover:bg-slate-100 text-xs">+</button>
               </div>
             </div>
           </div>
-          <button @click="cartStore.removeItem(item._id)" class="text-slate-400 hover:text-rose-500 p-1 self-start transition-colors" title="Remove">
+          <button @click="cartStore.removeItem(item.cartItemId || item._id)" class="text-slate-400 hover:text-rose-500 p-1 self-start transition-colors" title="Remove">
             <Trash2 class="w-4 h-4" />
           </button>
         </div>

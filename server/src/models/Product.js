@@ -65,6 +65,27 @@ const ProductSchema = new mongoose.Schema({
   features: [{
     type: String
   }],
+  // Sizes & Colors Options
+  sizes: [{
+    type: String,
+    trim: true
+  }],
+  colors: [{
+    type: String,
+    trim: true
+  }],
+  // Detailed Product Variants (Size, Color, Price, SKU, Stock)
+  variants: [{
+    title: { type: String, default: '' },
+    size: { type: String, default: '' },
+    color: { type: String, default: '' },
+    sku: { type: String, default: '' },
+    price: { type: Number, required: true },
+    salePrice: { type: Number, default: null },
+    stock: { type: Number, default: 25 },
+    unit: { type: String, default: 'Piece' },
+    image: { type: String, default: '' }
+  }],
   featured: {
     type: Boolean,
     default: false

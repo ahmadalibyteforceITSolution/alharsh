@@ -140,10 +140,16 @@
             <!-- Items summary -->
             <div class="bg-slate-800/60 p-4 rounded-2xl border border-slate-700 space-y-2">
               <div class="font-bold text-slate-300">Items in this consignment:</div>
-              <div class="space-y-1 max-h-36 overflow-y-auto">
-                <div v-for="(it, i) in selectedOrder.items" :key="i" class="flex justify-between text-2xs text-slate-300">
-                  <span>{{ it.quantity }}x {{ it.name }}</span>
-                  <span class="font-bold">Rs. {{ (it.price * it.quantity).toLocaleString() }}</span>
+              <div class="space-y-2 max-h-48 overflow-y-auto">
+                <div v-for="(it, i) in selectedOrder.items" :key="i" class="flex justify-between items-start text-2xs text-slate-300 bg-slate-900/60 p-2 rounded-xl border border-slate-800">
+                  <div class="space-y-0.5">
+                    <span class="font-bold text-white">{{ it.quantity }}x {{ it.name }}</span>
+                    <div v-if="it.size || it.color" class="flex gap-1.5 text-accent-cyan font-medium">
+                      <span v-if="it.size" class="bg-brand-950 px-1.5 py-0.5 rounded border border-brand-800">Size: {{ it.size }}</span>
+                      <span v-if="it.color" class="bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700">Color: {{ it.color }}</span>
+                    </div>
+                  </div>
+                  <span class="font-bold text-accent-cyan whitespace-nowrap ml-2">Rs. {{ (it.price * it.quantity).toLocaleString() }}</span>
                 </div>
               </div>
               <div class="border-t border-slate-700 pt-2 flex justify-between font-bold text-xs text-white">
